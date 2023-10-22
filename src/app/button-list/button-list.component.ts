@@ -14,7 +14,7 @@ export class ButtonListComponent implements OnInit {
 
   generateButtons() {
     for (let i = 1; i <= 20; i++) {
-      this.buttons.push({ label: 'Button ' + i, id: i });
+      this.buttons.push({ label: 'Button ' + i, id: i, isRemoved: false });
     }
     console.log(this.buttons);
   }
