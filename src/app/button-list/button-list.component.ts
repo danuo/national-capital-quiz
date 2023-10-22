@@ -24,6 +24,6 @@ export class ButtonListComponent implements OnInit {
   }
 
   trackByItem(index: number, item: any): number {
-    return item.id; // Use the unique identifier of the item
+    return item.id;
   }
 }
