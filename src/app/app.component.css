@@ -1,0 +1,19 @@
+body {
+    overflow: hidden;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 800px; /* Set your desired maximum width */
+    width: 100%;
+    padding: 20px; /* Optional: Add padding for inner content */
+    box-sizing: border-box;
+}
