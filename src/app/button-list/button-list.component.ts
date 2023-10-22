@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./button-list.component.css'],
 })
 export class ButtonListComponent implements OnInit {
-  buttons: any[] = [];
+  buttons: Map<number, any> = new Map();
 
   ngOnInit() {
     this.generateButtons();
@@ -14,8 +14,12 @@ export class ButtonListComponent implements OnInit {
 
   generateButtons() {
     for (let i = 1; i <= 20; i++) {
-      this.buttons.push({ label: 'Button ' + i, id: i, isRemoved: false });
+      this.buttons.set(i, 'Button ' + i);
     }
+  }
+
+  removeItem(index: number) {
     console.log(this.buttons);
+    this.buttons.delete(index);
   }
 }

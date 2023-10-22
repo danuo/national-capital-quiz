@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, Input } from '@angular/core';
+import { ButtonListComponent } from '../button-list/button-list.component';
 
 @Component({
   selector: 'app-button',
@@ -22,10 +23,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() label!: string;
-  @Input() id!: string;
-  @Input() isRemoved!: boolean;
+  @Input() id!: number;
+  @Input() listComponent!: ButtonListComponent;
 
-  removeButton() {
-    this.isRemoved = true;
+  onClick() {
+    this.listComponent.removeItem(this.id);
   }
 }

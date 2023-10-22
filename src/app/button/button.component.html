@@ -1,8 +1,7 @@
 <p-button
   [id]="'button' + id"
-  class="flex align-items-center justify-content-center m-2"
   [label]="label"
-  (click)="removeButton()"
-  [@buttonAnimation]="isRemoved ? 'removed' : 'normal'"
+  class="flex align-items-center justify-content-center m-2"
+  (click)="onClick()"
 >
 </p-button>
