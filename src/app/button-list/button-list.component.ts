@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./button-list.component.css'],
 })
 export class ButtonListComponent implements OnInit {
-  buttons: Map<number, any> = new Map();
+  buttons: any[] = [];
 
   ngOnInit() {
     this.generateButtons();
@@ -14,12 +14,16 @@ export class ButtonListComponent implements OnInit {
 
   generateButtons() {
     for (let i = 1; i <= 20; i++) {
-      this.buttons.set(i, 'Button ' + i);
+      let buttonData = {
+        label: 'button: ' + i,
+        id: i,
+        isActive: true,
+      };
+      this.buttons.push(buttonData);
     }
   }
 
-  removeItem(index: number) {
-    console.log(this.buttons);
-    this.buttons.delete(index);
+  trackByItem(index: number, item: any): number {
+    return item.id; // Use the unique identifier of the item
   }
 }

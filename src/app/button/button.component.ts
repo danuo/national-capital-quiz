@@ -1,12 +1,5 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
-import { ButtonListComponent } from '../button-list/button-list.component';
 
 @Component({
   selector: 'app-button',
@@ -14,19 +7,22 @@ import { ButtonListComponent } from '../button-list/button-list.component';
   styleUrls: ['./button.component.css'],
   animations: [
     trigger('buttonAnimation', [
-      state('normal', style({ opacity: 1, transform: 'translateY(0)' })),
-      state('removed', style({ opacity: 0, transform: 'translateY(500%)' })),
-      transition('normal => removed', animate('300ms ease-out')),
-      transition('removed => normal', animate('300ms ease-in')),
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(100%)' }),
+        animate(1000, style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('300ms', style({ opacity: 0, transform: 'translateY(100%)' })),
+      ]),
     ]),
   ],
 })
 export class ButtonComponent {
   @Input() label!: string;
   @Input() id!: number;
-  @Input() listComponent!: ButtonListComponent;
+  @Input() isActive!: boolean;
 
   onClick() {
-    this.listComponent.removeItem(this.id);
+    this.isActive = false;
   }
 }
