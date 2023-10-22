@@ -5,11 +5,13 @@ import { ButtonListComponent } from './button-list/button-list.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ButtonComponent } from './button/button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ButtonListComponent
+    ButtonListComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,

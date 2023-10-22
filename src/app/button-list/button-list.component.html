@@ -1,9 +1,7 @@
 <div class="flex flex-wrap" style="max-width: 500px">
-  <p-button
+  <app-button
     *ngFor="let button of buttons"
-    [id]="'button' + button.id"
-    class="flex align-items-center justify-content-center m-2"
     [label]="button.label"
-  >
-  </p-button>
+    [id]="button.id"
+  ></app-button>
 </div>
