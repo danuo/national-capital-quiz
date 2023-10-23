@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { WindowService } from '../window.service';
 
 @Component({
@@ -6,11 +6,16 @@ import { WindowService } from '../window.service';
   templateUrl: './button-confetti.component.html',
   styleUrls: ['./button-confetti.component.css'],
 })
-export class ButtonConfettiComponent {
+export class ButtonConfettiComponent implements OnChanges {
+  @Input() isCompleted!: boolean;
   window: any = null;
 
   constructor(private windowService: WindowService) {
     this.window = this.windowService.nativeWindow;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   randomInRange(min: number, max: number): number {
