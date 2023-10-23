@@ -30,13 +30,12 @@ export class ButtonListComponent implements OnInit {
         label: item,
         id: index,
         isActive: true,
-        state: 'selected',
+        state: '',
       };
     });
   }
 
   handleClick(newIndex: number) {
-    console.log('heeere');
     if (this.selectedIndex == null) {
       this.selectedIndex = newIndex;
       // all states to "dark"

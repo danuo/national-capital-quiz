@@ -1,5 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ButtonListComponent } from '../button-list/button-list.component';
 
 @Component({
@@ -18,7 +24,7 @@ import { ButtonListComponent } from '../button-list/button-list.component';
     ]),
   ],
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, OnChanges {
   @Input() label!: string;
   @Input() id!: number;
   @Input() isActive!: boolean;
@@ -29,22 +35,26 @@ export class ButtonComponent implements OnInit {
   severity = '';
 
   ngOnInit(): void {
-    this.outlined = this.isOutlined();
-    this.severity = this.getSeverity();
+    this.updateFields();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.updateFields();
+  }
+
+  updateFields(): void {
+    // outlined
+    this.outlined = this.state != 'selected';
+
+    // severity
+    if (this.state == 'red') {
+      this.severity = 'warning';
+    } else {
+      this.severity = '';
+    }
   }
 
   onClick() {
     this.parent.handleClick(this.id);
-  }
-
-  isOutlined() {
-    return !(this.state == 'selected');
-  }
-
-  getSeverity() {
-    if (this.state == 'red') {
-      return 'warning';
-    }
-    return '';
   }
 }
