@@ -35,7 +35,7 @@ export class ButtonListComponent implements OnInit {
   }
 
   handleClick(newIndex: number) {
-    // reset state
+    // reset buttons that are not done
     for (let button of this.buttons) {
       if (button.state != 'done') {
         button.state = '';
@@ -45,7 +45,6 @@ export class ButtonListComponent implements OnInit {
     // only one selected
     if (this.selectedIndex == null) {
       this.selectedIndex = newIndex;
-      // all states to "dark"
       this.buttons[newIndex].state = 'selected';
       console.log(this.buttons);
       return;
@@ -54,7 +53,6 @@ export class ButtonListComponent implements OnInit {
     // same button clicked again
     if (this.selectedIndex == newIndex) {
       this.selectedIndex = null;
-      // all states to "dark"
       return;
     }
 
