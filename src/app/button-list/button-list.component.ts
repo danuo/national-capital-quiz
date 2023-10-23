@@ -14,6 +14,9 @@ export class ButtonListComponent implements OnInit {
   buttons: ButtonData[] = [];
   correctResultMapping: StringObject = {};
 
+  nTotal: number = 0;
+  nSolved: number = 0;
+
   selectedIndex: number | null = null;
 
   ngOnInit() {
@@ -26,6 +29,7 @@ export class ButtonListComponent implements OnInit {
     } else {
       dataSelection = this.data;
     }
+    this.nTotal = Object.keys(dataSelection).length;
 
     // create mapping for correct result
     const dataInv = invert(dataSelection);
@@ -76,6 +80,8 @@ export class ButtonListComponent implements OnInit {
       this.buttons[newIndex].state = 'done';
       this.buttons[this.selectedIndex].state = 'done';
       this.selectedIndex = null;
+
+      this.nSolved = this.getNSolved();
       return;
     } else {
       // incorrect pair selected
@@ -84,6 +90,18 @@ export class ButtonListComponent implements OnInit {
       this.selectedIndex = null;
       return;
     }
+  }
+
+  getNSolved() {
+    let nSolved = 0;
+    for (let button of this.buttons) {
+      if (button.state == 'done') {
+        nSolved++;
+      }
+    }
+    nSolved = nSolved / 2;
+    console.log(nSolved);
+    return nSolved;
   }
 
   trackByItem(index: number, item: any): number {

@@ -1,4 +1,16 @@
-<div class="flex flex-wrap">
+<div class="flex flex-wrap align-items-center m-3">
+  <p-button
+    label="refresh"
+    class="m-2 mylist"
+    severity="help"
+    [outlined]="false"
+    (click)="ngOnInit()"
+  >
+  </p-button>
+  <span class="pl-2 text-xl">Solved {{ nSolved }}/{{ nTotal }}</span>
+</div>
+<p-divider type="dashed"></p-divider>
+<div class="flex flex-wrap m-3">
   <app-button
     *ngFor="let button of buttons; trackBy: trackByItem"
     [label]="button.label"
