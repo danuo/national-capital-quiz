@@ -14,7 +14,7 @@ export class ButtonListComponent implements OnInit {
   buttons: ButtonData[] = [];
   correctResultMapping: StringObject = {};
 
-  nTotal: number = 0;
+  nTotal: number = 10;
   nSolved: number = 0;
 
   selectedIndex: number | null = null;
@@ -24,9 +24,9 @@ export class ButtonListComponent implements OnInit {
 
     // select 10 country/city pairs
     let dataSelection: StringObject = {};
-    if (Object.keys(this.data).length > 10) {
+    if (Object.keys(this.data).length > this.nTotal) {
       const shuffledKeys = shuffle(Object.keys(this.data));
-      const randomSubsetKeys = take(shuffledKeys, 10);
+      const randomSubsetKeys = take(shuffledKeys, this.nTotal);
       dataSelection = pick(this.data, randomSubsetKeys);
     } else {
       dataSelection = this.data;
