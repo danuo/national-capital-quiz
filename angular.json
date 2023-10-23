@@ -30,7 +30,9 @@
               "node_modules/primeflex/primeflex.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"
+            ]
           },
           "configurations": {
             "production": {
