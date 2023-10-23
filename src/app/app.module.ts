@@ -7,9 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ButtonListComponent } from './button-list/button-list.component';
 import { ButtonComponent } from './button/button.component';
+import { ButtonConfettiComponent } from './button-confetti/button-confetti.component';
 
 @NgModule({
-  declarations: [AppComponent, ButtonListComponent, ButtonComponent],
+  declarations: [AppComponent, ButtonListComponent, ButtonComponent, ButtonConfettiComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
