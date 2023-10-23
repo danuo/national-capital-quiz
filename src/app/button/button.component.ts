@@ -27,7 +27,6 @@ import { ButtonListComponent } from '../button-list/button-list.component';
 export class ButtonComponent implements OnInit, OnChanges {
   @Input() label!: string;
   @Input() id!: number;
-  @Input() isActive!: boolean;
   @Input() state!: string;
   @Input() parent!: ButtonListComponent;
 

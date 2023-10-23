@@ -29,7 +29,6 @@ export class ButtonListComponent implements OnInit {
       return {
         label: item,
         id: index,
-        isActive: true,
         state: '',
       };
     });
