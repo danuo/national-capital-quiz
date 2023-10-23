@@ -11,6 +11,7 @@
 </div>
 <p-divider type="dashed"></p-divider>
 <div class="flex flex-wrap m-3">
+  <app-button-confetti></app-button-confetti>
   <app-button
     *ngFor="let button of buttons; trackBy: trackByItem"
     [label]="button.label"
