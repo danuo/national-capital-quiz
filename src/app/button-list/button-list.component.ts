@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { invert, shuffle } from 'lodash';
+import { invert, pick, shuffle, take } from 'lodash';
 import { ButtonData, StringObject } from 'src/shared/shared-types';
 
 @Component({
@@ -17,14 +17,26 @@ export class ButtonListComponent implements OnInit {
   selectedIndex: number | null = null;
 
   ngOnInit() {
-    const dataInv = invert(this.data);
-    this.correctResultMapping = { ...this.data, ...dataInv };
+    // select 10 country/city pairs
+    let dataSelection: StringObject = {};
+    if (Object.keys(this.data).length > 10) {
+      const shuffledKeys = shuffle(Object.keys(this.data));
+      const randomSubsetKeys = take(shuffledKeys, 10);
+      dataSelection = pick(this.data, randomSubsetKeys);
+    } else {
+      dataSelection = this.data;
+    }
+
+    // create mapping for correct result
+    const dataInv = invert(dataSelection);
+    this.correctResultMapping = { ...dataSelection, ...dataInv };
+
+    // create data for the buttons
     const allButtonLabels = [
-      ...Object.keys(this.data),
-      ...Object.values(this.data),
+      ...Object.keys(dataSelection),
+      ...Object.values(dataSelection),
     ];
     const shuffledButtonLabels = shuffle(allButtonLabels);
-
     this.buttons = shuffledButtonLabels.map((item, index) => {
       return {
         label: item,
