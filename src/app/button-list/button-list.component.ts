@@ -36,6 +36,12 @@ export class ButtonListComponent implements OnInit {
   }
 
   handleClick(newIndex: number) {
+    // reset state
+    for (let button of this.buttons) {
+      button.state = '';
+    }
+
+    // only one selected
     if (this.selectedIndex == null) {
       this.selectedIndex = newIndex;
       // all states to "dark"
@@ -44,6 +50,7 @@ export class ButtonListComponent implements OnInit {
       return;
     }
 
+    // same button clicked again
     if (this.selectedIndex == newIndex) {
       this.selectedIndex = null;
       // all states to "dark"
@@ -54,11 +61,13 @@ export class ButtonListComponent implements OnInit {
     let newName = this.buttons[newIndex].label;
 
     if (this.correctResultMapping[selectedName] == newName) {
+      // correct pair selected
       this.buttons[newIndex].state = 'done';
       this.buttons[this.selectedIndex].state = 'done';
       this.selectedIndex = null;
       return;
     } else {
+      // incorrect pair selected
       this.buttons[newIndex].state = 'red';
       this.buttons[this.selectedIndex].state = 'red';
       this.selectedIndex = null;
