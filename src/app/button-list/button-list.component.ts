@@ -20,6 +20,8 @@ export class ButtonListComponent implements OnInit {
   selectedIndex: number | null = null;
 
   ngOnInit() {
+    this.nSolved = 0;
+
     // select 10 country/city pairs
     let dataSelection: StringObject = {};
     if (Object.keys(this.data).length > 10) {
