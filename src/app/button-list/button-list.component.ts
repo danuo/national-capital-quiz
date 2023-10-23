@@ -45,7 +45,7 @@ export class ButtonListComponent implements OnInit {
       return {
         label: item,
         id: index,
-        state: 'done',
+        state: '',
       };
     });
   }
