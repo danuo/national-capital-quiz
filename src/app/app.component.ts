@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 
-import { StringObject } from 'src/shared/shared-types';
+import { countryData } from 'src/shared/shared-types';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +11,7 @@ import { StringObject } from 'src/shared/shared-types';
 export class AppComponent implements OnInit {
   title = 'angular';
 
-  data: StringObject = {
-    Germany: 'Berlin',
-    Azerbaijan: 'Baku',
-  };
+  data = countryData;
 
   constructor(private primengConfig: PrimeNGConfig) {}
   ngOnInit() {
