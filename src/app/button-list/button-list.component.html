@@ -10,14 +10,22 @@
   <span class="pl-2 text-xl">Solved {{ nSolved }}/{{ nTotal }}</span>
 </div>
 <p-divider type="dashed"></p-divider>
-<div class="flex flex-wrap m-3">
-  <app-button-confetti></app-button-confetti>
-  <app-button
-    *ngFor="let button of buttons; trackBy: trackByItem"
-    [label]="button.label"
-    [id]="button.id"
-    [state]="button.state"
-    [parent]="this"
+<!-- <div style="position: relative"> -->
+<div class="relative">
+  <div
+    class="absolute w-full h-full flex justify-content-center align-items-center"
   >
-  </app-button>
+    <app-button-confetti></app-button-confetti>
+  </div>
+
+  <div class="flex flex-wrap m-3">
+    <app-button
+      *ngFor="let button of buttons; trackBy: trackByItem"
+      [label]="button.label"
+      [id]="button.id"
+      [state]="button.state"
+      [parent]="this"
+    >
+    </app-button>
+  </div>
 </div>
