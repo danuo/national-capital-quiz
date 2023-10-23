@@ -37,7 +37,9 @@ export class ButtonListComponent implements OnInit {
   handleClick(newIndex: number) {
     // reset state
     for (let button of this.buttons) {
-      button.state = '';
+      if (button.state != 'done') {
+        button.state = '';
+      }
     }
 
     // only one selected

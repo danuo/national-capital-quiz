@@ -2,9 +2,8 @@
   [label]="label"
   class="flex align-items-center justify-content-center m-2 mylist"
   (click)="onClick()"
-  @buttonAnimation
+  [@buttonAnimation]="state == 'done' ? 'done' : 'normal'"
   [outlined]="outlined"
   [severity]="severity"
 >
-  {{ state }} test
 </p-button>

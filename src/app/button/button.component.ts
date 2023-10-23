@@ -1,4 +1,10 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import {
   Component,
   Input,
@@ -14,6 +20,8 @@ import { ButtonListComponent } from '../button-list/button-list.component';
   styleUrls: ['./button.component.css'],
   animations: [
     trigger('buttonAnimation', [
+      state('done', style({ opacity: 0, transform: 'translateY(500%)' })),
+      transition('* => done', animate('1000ms ease-out')),
       transition(':enter', [
         style({ opacity: 0, transform: 'translateY(100%)' }),
         animate(1000, style({ opacity: 1, transform: 'translateY(0)' })),
@@ -47,7 +55,7 @@ export class ButtonComponent implements OnInit, OnChanges {
 
     // severity
     if (this.state == 'red') {
-      this.severity = 'warning';
+      this.severity = 'danger';
     } else {
       this.severity = '';
     }
