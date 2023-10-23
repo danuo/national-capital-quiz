@@ -5,11 +5,18 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ButtonConfettiComponent } from './button-confetti/button-confetti.component';
 import { ButtonListComponent } from './button-list/button-list.component';
 import { ButtonComponent } from './button/button.component';
+import { WindowService } from './window.service';
 
 @NgModule({
-  declarations: [AppComponent, ButtonListComponent, ButtonComponent],
+  declarations: [
+    AppComponent,
+    ButtonListComponent,
+    ButtonComponent,
+    ButtonConfettiComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -17,7 +24,7 @@ import { ButtonComponent } from './button/button.component';
     DividerModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [WindowService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
