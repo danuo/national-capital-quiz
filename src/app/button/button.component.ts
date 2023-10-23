@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ButtonListComponent } from '../button-list/button-list.component';
 
 @Component({
   selector: 'app-button',
@@ -17,12 +18,33 @@ import { Component, Input } from '@angular/core';
     ]),
   ],
 })
-export class ButtonComponent {
+export class ButtonComponent implements OnInit {
   @Input() label!: string;
   @Input() id!: number;
   @Input() isActive!: boolean;
+  @Input() state!: string;
+  @Input() parent!: ButtonListComponent;
+
+  outlined = true;
+  severity = '';
+
+  ngOnInit(): void {
+    this.outlined = this.isOutlined();
+    this.severity = this.getSeverity();
+  }
 
   onClick() {
-    this.isActive = false;
+    this.parent.handleClick(this.id);
+  }
+
+  isOutlined() {
+    return !(this.state == 'selected');
+  }
+
+  getSeverity() {
+    if (this.state == 'red') {
+      return 'warning';
+    }
+    return '';
   }
 }
