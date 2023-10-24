@@ -21,7 +21,7 @@ export class ButtonListComponent implements OnInit {
   ngOnInit() {
     this.nSolved = 0;
 
-    // select 10 country/city pairs
+    // select {{nTotal}} country/city pairs
     let dataSelection: StringObject = {};
     if (Object.keys(this.data).length > this.nTotal) {
       const shuffledKeys = shuffle(Object.keys(this.data));
