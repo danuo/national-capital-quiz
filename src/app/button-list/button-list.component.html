@@ -10,7 +10,6 @@
   <span class="pl-2 text-xl">Solved {{ nSolved }}/{{ nTotal }}</span>
 </div>
 <p-divider type="dashed"></p-divider>
-<!-- <div style="position: relative"> -->
 <div class="relative">
   <ng-container *ngIf="nSolved == nTotal">
     <div class="absolute w-full h-full flex flex-column align-items-center">
@@ -23,7 +22,7 @@
 
   <div class="flex flex-wrap m-3">
     <app-button
-      *ngFor="let button of buttons; trackBy: trackByItem"
+      *ngFor="let button of buttons"
       [label]="button.label"
       [id]="button.id"
       [state]="button.state"
