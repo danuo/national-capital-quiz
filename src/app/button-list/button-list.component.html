@@ -23,7 +23,7 @@
 
   <div class="flex flex-wrap m-3">
     <app-button
-      *ngFor="let button of buttons; trackBy: trackByItem"
+      *ngFor="let button of buttons"
       [label]="button.label"
       [id]="button.id"
       [state]="button.state"

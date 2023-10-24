@@ -16,7 +16,6 @@ export class ButtonListComponent implements OnInit {
 
   nTotal: number = 10;
   nSolved: number = 0;
-
   selectedIndex: number | null = null;
 
   ngOnInit() {
@@ -82,7 +81,6 @@ export class ButtonListComponent implements OnInit {
       this.buttons[newIndex].state = 'done';
       this.buttons[this.selectedIndex].state = 'done';
       this.selectedIndex = null;
-
       this.nSolved = this.getNSolved();
       return;
     } else {
@@ -102,11 +100,6 @@ export class ButtonListComponent implements OnInit {
       }
     }
     nSolved = nSolved / 2;
-    console.log(nSolved);
     return nSolved;
-  }
-
-  trackByItem(index: number, item: any): number {
-    return item.id;
   }
 }
