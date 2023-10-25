@@ -12,6 +12,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { AppLogicService } from 'src/app/app-logic.service';
 import { ButtonListComponent } from '../button-list/button-list.component';
 
 @Component({
@@ -50,6 +51,8 @@ export class ButtonComponent implements OnInit, OnChanges {
   @Input() state!: string;
   @Input() parent!: ButtonListComponent;
 
+  constructor(private appLogic: AppLogicService) {}
+
   outlined = true;
   severity = '';
 
@@ -74,6 +77,6 @@ export class ButtonComponent implements OnInit, OnChanges {
   }
 
   onClick() {
-    this.parent.onClick(this.id);
+    this.appLogic.selectItem(this.id);
   }
 }
