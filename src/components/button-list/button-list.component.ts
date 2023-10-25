@@ -8,8 +8,8 @@ import { AppStoreService } from 'src/shared/store';
   styleUrls: ['./button-list.component.css'],
 })
 export class ButtonListComponent {
-  nSolved$ = this.store.nSolved$;
   buttons$ = this.store.buttons$;
+  isDone$ = this.store.isDone$;
 
   constructor(private store: AppStoreService) {}
 }
