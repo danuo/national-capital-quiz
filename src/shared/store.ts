@@ -39,3 +39,6 @@ export class AppStoreService extends ComponentStore<MyState> {
   // read state
   // readonly status$: Observable<number> = this.select((state) => state.status);
 }
+
+// link to docs
+// https://ngrx.io/guide/component-store/write
