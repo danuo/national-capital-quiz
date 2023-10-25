@@ -1,40 +1,29 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { DataInitService } from 'src/services/data-init.service';
 import { AppStoreService } from 'src/shared/store';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppLogicService implements OnInit {
+export class AppLogicService {
   // buttons$ = this.store.buttons$;
   // correctResultMapping$ = this.store.correctResultMapping$;
-  nTotal$ = this.store.nTotal$;
+  // nTotal$ = this.store.nTotal$;
   // nSolved$ = this.store.nSolved$;
   // selectedIndex$ = this.store.selectedIndex$;
 
-  constructor(private store: AppStoreService) {
-    console.log('AAA');
-    console.log(this.store.state());
+  constructor(
+    private dataInit: DataInitService,
+    private store: AppStoreService
+  ) {
+    this.refreshQuizData();
   }
 
-  ngOnInit(): void {
-    // this is never called
-    console.log('BBB');
+  refreshQuizData() {
+    this.dataInit.refreshQuizData();
   }
 
-  reload(): void {
-    // ! test function
-    console.log(this.store.state());
-    console.log(this.nTotal$);
-    console.log(
-      this.nTotal$.subscribe({
-        next(x) {
-          console.log(x);
-        },
-      })
-    );
-  }
-
-  selectButton(newIndex: number) {
+  selectItem(newIndex: number) {
     let state = this.store.state();
 
     let selectedName = '';
@@ -52,24 +41,20 @@ export class AppLogicService implements OnInit {
 
     // only one selected
     if (state.selectedIndex == null) {
-      // state.selectedIndex = newIndex;
       this.store.patchState({ selectedIndex: newIndex });
       state.buttons[newIndex].state = 'selected';
     } else if (state.selectedIndex == newIndex) {
       // same button clicked again
-      // state.selectedIndex = null; // todo
       this.store.patchState({ selectedIndex: null });
     } else if (state.correctResultMapping[selectedName] == newName) {
       // correct pair selected
       state.buttons[newIndex].state = 'done';
       state.buttons[state.selectedIndex].state = 'done';
-      // state.selectedIndex = null; // todo
       this.store.patchState({ selectedIndex: null });
     } else {
       // incorrect pair selected
       state.buttons[newIndex].state = 'red';
       state.buttons[state.selectedIndex].state = 'red';
-      // state.selectedIndex = null; // todo
       this.store.patchState({ selectedIndex: null });
     }
     this.store.patchState({ buttons: state.buttons });
