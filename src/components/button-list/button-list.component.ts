@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { invert, pick, shuffle, take } from 'lodash';
+import { AppLogicService } from 'src/app/app-logic.service';
 import { ButtonData, StringObject } from 'src/shared/shared-types';
 
 @Component({
@@ -13,12 +14,15 @@ export class ButtonListComponent implements OnInit {
 
   buttons: ButtonData[] = [];
   correctResultMapping: StringObject = {};
-
   nTotal: number = 10;
   nSolved: number = 0;
   selectedIndex: number | null = null;
 
+  constructor(private appLogic: AppLogicService) {}
+
   ngOnInit() {
+    this.appLogic.reload();
+
     this.nSolved = 0;
 
     // select {{nTotal}} country/city pairs
