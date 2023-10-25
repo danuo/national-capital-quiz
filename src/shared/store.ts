@@ -19,7 +19,7 @@ export class AppStoreService extends ComponentStore<MyState> {
     super({
       buttons: [],
       correctResultMapping: {},
-      nMax: 1,
+      nMax: 10,
       nTotal: 0,
       nSolved: 0,
       selectedIndex: null,
@@ -32,6 +32,7 @@ export class AppStoreService extends ComponentStore<MyState> {
   readonly correctResultMapping$: Observable<StringObject> = this.select(
     (state) => state.correctResultMapping
   );
+  readonly nMax$: Observable<number> = this.select((state) => state.nMax);
   readonly nTotal$: Observable<number> = this.select((state) => state.nTotal);
   readonly nSolved$: Observable<number> = this.select((state) => state.nSolved);
   readonly selectedIndex$: Observable<number | null> = this.select(
@@ -44,10 +45,4 @@ export class AppStoreService extends ComponentStore<MyState> {
       return v1 == v2;
     })
   );
-
-  // read state
-  // readonly status$: Observable<number> = this.select((state) => state.status);
 }
-
-// link to docs
-// https://ngrx.io/guide/component-store/write
