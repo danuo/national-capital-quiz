@@ -74,6 +74,6 @@ export class ButtonComponent implements OnInit, OnChanges {
   }
 
   onClick() {
-    this.parent.handleClick(this.id);
+    this.parent.onClick(this.id);
   }
 }
