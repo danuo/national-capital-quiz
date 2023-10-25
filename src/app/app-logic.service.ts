@@ -6,12 +6,6 @@ import { AppStoreService } from 'src/shared/store';
   providedIn: 'root',
 })
 export class AppLogicService {
-  // buttons$ = this.store.buttons$;
-  // correctResultMapping$ = this.store.correctResultMapping$;
-  // nTotal$ = this.store.nTotal$;
-  // nSolved$ = this.store.nSolved$;
-  // selectedIndex$ = this.store.selectedIndex$;
-
   constructor(
     private dataInit: DataInitService,
     private store: AppStoreService
@@ -21,6 +15,8 @@ export class AppLogicService {
 
   refreshQuizData() {
     this.dataInit.refreshQuizData();
+    let nSolved = this.getNSolved();
+    this.store.patchState({ nSolved });
   }
 
   selectItem(newIndex: number) {
