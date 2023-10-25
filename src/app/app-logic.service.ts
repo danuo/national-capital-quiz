@@ -5,64 +5,82 @@ import { AppStoreService } from 'src/shared/store';
   providedIn: 'root',
 })
 export class AppLogicService implements OnInit {
-  buttons$ = this.store.buttons$;
-  correctResultMapping$ = this.store.correctResultMapping$;
+  // buttons$ = this.store.buttons$;
+  // correctResultMapping$ = this.store.correctResultMapping$;
   nTotal$ = this.store.nTotal$;
-  nSolved$ = this.store.nSolved$;
-  selectedIndex$ = this.store.selectedIndex$;
+  // nSolved$ = this.store.nSolved$;
+  // selectedIndex$ = this.store.selectedIndex$;
 
-  constructor(private store: AppStoreService) {}
+  constructor(private store: AppStoreService) {
+    console.log('AAA');
+    console.log(this.store.state());
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this is never called
+    console.log('BBB');
+  }
 
   reload(): void {
-    this.store.setState();
+    // ! test function
+    console.log(this.store.state());
+    console.log(this.nTotal$);
+    console.log(
+      this.nTotal$.subscribe({
+        next(x) {
+          console.log(x);
+        },
+      })
+    );
   }
 
   selectButton(newIndex: number) {
+    let state = this.store.state();
+
+    let selectedName = '';
+    if (state.selectedIndex != null) {
+      selectedName = state.buttons[state.selectedIndex].label;
+    }
+    let newName = state.buttons[newIndex].label;
+
     // reset buttons that are not done
-    for (let button of this.buttons) {
+    for (let button of state.buttons) {
       if (button.state != 'done') {
         button.state = '';
       }
     }
 
     // only one selected
-    if (this.selectedIndex$ == null) {
-      this.selectedIndex$ = newIndex;
-      this.buttons$[newIndex].state = 'selected';
-      console.log(this.buttons);
-      return;
-    }
-
-    // same button clicked again
-    if (this.selectedIndex == newIndex) {
-      this.selectedIndex = null;
-      return;
-    }
-
-    let selectedName = this.buttons[this.selectedIndex].label;
-    let newName = this.buttons[newIndex].label;
-
-    if (this.correctResultMapping[selectedName] == newName) {
+    if (state.selectedIndex == null) {
+      // state.selectedIndex = newIndex;
+      this.store.patchState({ selectedIndex: newIndex });
+      state.buttons[newIndex].state = 'selected';
+    } else if (state.selectedIndex == newIndex) {
+      // same button clicked again
+      // state.selectedIndex = null; // todo
+      this.store.patchState({ selectedIndex: null });
+    } else if (state.correctResultMapping[selectedName] == newName) {
       // correct pair selected
-      this.buttons[newIndex].state = 'done';
-      this.buttons[this.selectedIndex].state = 'done';
-      this.selectedIndex = null;
-      this.nSolved = this.getNSolved();
-      return;
+      state.buttons[newIndex].state = 'done';
+      state.buttons[state.selectedIndex].state = 'done';
+      // state.selectedIndex = null; // todo
+      this.store.patchState({ selectedIndex: null });
     } else {
       // incorrect pair selected
-      this.buttons[newIndex].state = 'red';
-      this.buttons[this.selectedIndex].state = 'red';
-      this.selectedIndex = null;
-      return;
+      state.buttons[newIndex].state = 'red';
+      state.buttons[state.selectedIndex].state = 'red';
+      // state.selectedIndex = null; // todo
+      this.store.patchState({ selectedIndex: null });
     }
+    this.store.patchState({ buttons: state.buttons });
+    let nSolved = this.getNSolved();
+    this.store.patchState({ nSolved });
   }
 
-  getNSolved() {
+  getNSolved(): number {
+    let state = this.store.state();
     let nSolved = 0;
-    for (let button of this.buttons) {
+    for (let button of state.buttons) {
       if (button.state == 'done') {
         nSolved++;
       }
