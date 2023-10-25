@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable } from 'rxjs';
+import { Observable, combineLatestWith, map } from 'rxjs';
 import { ButtonData, StringObject } from 'src/shared/shared-types';
 
 export interface MyState {
@@ -19,7 +19,7 @@ export class AppStoreService extends ComponentStore<MyState> {
     super({
       buttons: [],
       correctResultMapping: {},
-      nMax: 10,
+      nMax: 1,
       nTotal: 0,
       nSolved: 0,
       selectedIndex: null,
@@ -36,6 +36,13 @@ export class AppStoreService extends ComponentStore<MyState> {
   readonly nSolved$: Observable<number> = this.select((state) => state.nSolved);
   readonly selectedIndex$: Observable<number | null> = this.select(
     (state) => state.selectedIndex
+  );
+
+  readonly isDone$ = this.nTotal$.pipe(
+    combineLatestWith(this.nSolved$),
+    map(([v1, v2]) => {
+      return v1 == v2;
+    })
   );
 
   // read state
