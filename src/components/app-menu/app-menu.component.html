@@ -1,0 +1,13 @@
+<div class="flex flex-wrap align-items-center m-3">
+  <p-button
+    label="refresh"
+    class="m-2 mylist"
+    severity="help"
+    [outlined]="false"
+    (click)="refresh()"
+  >
+  </p-button>
+  <span class="pl-2 text-xl"
+    >Solved {{ nSolved$ | async }}/{{ nTotal$ | async }}</span
+  >
+</div>
