@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppStoreService } from 'src/services/app-store.service';
 import { DataInitService } from 'src/services/data-init.service';
 
+import { ButtonData } from 'src/shared/shared-types';
 @Injectable({
   providedIn: 'root',
 })
@@ -10,17 +11,20 @@ export class AppLogicService {
     private dataInit: DataInitService,
     private store: AppStoreService
   ) {
+    this.store.buttons$.subscribe((buttons) => {
+      console.log('yeeee');
+      this.refreshNSolved(buttons);
+    });
     this.refreshQuizData();
   }
 
   refreshQuizData() {
     this.dataInit.refreshQuizData();
-    let nSolved = this.getNSolved();
-    this.store.patchState({ nSolved });
   }
 
   selectItem(newIndex: number) {
     let state = this.store.state();
+    // let buttons = cloneDeep()
 
     let selectedName = '';
     if (state.selectedIndex != null) {
@@ -53,20 +57,18 @@ export class AppLogicService {
       state.buttons[state.selectedIndex].state = 'red';
       this.store.patchState({ selectedIndex: null });
     }
+    console.log('this runs but doesnt trigger buttons$ observer');
     this.store.patchState({ buttons: state.buttons });
-    let nSolved = this.getNSolved();
-    this.store.patchState({ nSolved });
   }
 
-  getNSolved(): number {
-    let state = this.store.state();
+  refreshNSolved(buttons: ButtonData[]) {
     let nSolved = 0;
-    for (let button of state.buttons) {
+    for (let button of buttons) {
       if (button.state == 'done') {
         nSolved++;
       }
     }
     nSolved = nSolved / 2;
-    return nSolved;
+    this.store.patchState({ nSolved });
   }
 }
