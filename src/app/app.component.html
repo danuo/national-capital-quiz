@@ -7,7 +7,13 @@
       <div class="font-medium text-500 mb-3">
         Try to pair every country with it's capital city. <br />
       </div>
-      <div class="border-2 border-dashed surface-border">
+      <div
+        class="border-2 border-dashed surface-border"
+        [ngStyle]="{ 'min-height': '400px' }"
+      >
+        <div class="flex flex-wrap align-items-center m-3">
+          <app-number-selector></app-number-selector>
+        </div>
         <div class="flex flex-wrap align-items-center m-3">
           <app-button-refresh></app-button-refresh>
           <app-display-progress ngClass="pl-2"></app-display-progress>

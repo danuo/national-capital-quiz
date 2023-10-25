@@ -12,6 +12,10 @@ import { DataInitService } from 'src/services/data-init.service';
 import { WindowService } from 'src/services/window.service';
 import { ButtonRefreshComponent } from '../components/button-refresh/button-refresh.component';
 import { DisplayProgressComponent } from '../components/display-progress/display-progress.component';
+import { NumberSelectorComponent } from './number-selector/number-selector.component';
+
+import { FormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -21,12 +25,15 @@ import { DisplayProgressComponent } from '../components/display-progress/display
     ButtonConfettiComponent,
     ButtonRefreshComponent,
     DisplayProgressComponent,
+    NumberSelectorComponent,
   ],
   imports: [
     BrowserModule,
     ButtonModule,
     DividerModule,
     BrowserAnimationsModule,
+    InputNumberModule,
+    FormsModule,
   ],
   providers: [WindowService, AppStoreService, DataInitService],
   bootstrap: [AppComponent],

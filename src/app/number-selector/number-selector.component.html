@@ -1,0 +1,15 @@
+<p-inputNumber
+  [(ngModel)]="nMax"
+  [showButtons]="true"
+  buttonLayout="horizontal"
+  inputId="horizontal"
+  spinnerMode="horizontal"
+  [min]="1"
+  [max]="15"
+  decrementButtonClass="p-button-outlined"
+  incrementButtonClass="p-button-outlined"
+  incrementButtonIcon="pi pi-plus"
+  decrementButtonIcon="pi pi-minus"
+  [style]="{ width: '2rem' }"
+  (onInput)="onClick()"
+></p-inputNumber>
