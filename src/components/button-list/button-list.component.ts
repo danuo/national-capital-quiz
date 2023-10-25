@@ -10,8 +10,6 @@ import { ButtonData, StringObject } from 'src/shared/shared-types';
   styleUrls: ['./button-list.component.css'],
 })
 export class ButtonListComponent implements OnInit {
-  @Input() data!: StringObject;
-
   buttons: ButtonData[] = [];
   correctResultMapping: StringObject = {};
   nTotal: number = 10;
