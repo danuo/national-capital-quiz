@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { AppComponent } from 'src/app/app.component';
-import { AppMenuComponent } from 'src/components/app-menu/app-menu.component';
 import { ButtonConfettiComponent } from 'src/components/button-confetti/button-confetti.component';
 import { ButtonListComponent } from 'src/components/button-list/button-list.component';
 import { ButtonComponent } from 'src/components/button/button.component';
@@ -20,7 +19,6 @@ import { DisplayProgressComponent } from '../components/display-progress/display
     ButtonListComponent,
     ButtonComponent,
     ButtonConfettiComponent,
-    AppMenuComponent,
     ButtonRefreshComponent,
     DisplayProgressComponent,
   ],
