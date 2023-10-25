@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { cloneDeep } from 'lodash';
 import { AppStoreService } from 'src/services/app-store.service';
 import { DataInitService } from 'src/services/data-init.service';
 
@@ -24,16 +25,16 @@ export class AppLogicService {
 
   selectItem(newIndex: number) {
     let state = this.store.state();
-    // let buttons = cloneDeep()
+    let buttons = cloneDeep(state.buttons);
 
     let selectedName = '';
     if (state.selectedIndex != null) {
-      selectedName = state.buttons[state.selectedIndex].label;
+      selectedName = buttons[state.selectedIndex].label;
     }
-    let newName = state.buttons[newIndex].label;
+    let newName = buttons[newIndex].label;
 
     // reset buttons that are not done
-    for (let button of state.buttons) {
+    for (let button of buttons) {
       if (button.state != 'done') {
         button.state = '';
       }
@@ -42,23 +43,23 @@ export class AppLogicService {
     // only one selected
     if (state.selectedIndex == null) {
       this.store.patchState({ selectedIndex: newIndex });
-      state.buttons[newIndex].state = 'selected';
+      buttons[newIndex].state = 'selected';
     } else if (state.selectedIndex == newIndex) {
       // same button clicked again
       this.store.patchState({ selectedIndex: null });
     } else if (state.correctResultMapping[selectedName] == newName) {
       // correct pair selected
-      state.buttons[newIndex].state = 'done';
-      state.buttons[state.selectedIndex].state = 'done';
+      buttons[newIndex].state = 'done';
+      buttons[state.selectedIndex].state = 'done';
       this.store.patchState({ selectedIndex: null });
     } else {
       // incorrect pair selected
-      state.buttons[newIndex].state = 'red';
-      state.buttons[state.selectedIndex].state = 'red';
+      buttons[newIndex].state = 'red';
+      buttons[state.selectedIndex].state = 'red';
       this.store.patchState({ selectedIndex: null });
     }
     console.log('this runs but doesnt trigger buttons$ observer');
-    this.store.patchState({ buttons: state.buttons });
+    this.store.patchState({ buttons: buttons });
   }
 
   refreshNSolved(buttons: ButtonData[]) {
