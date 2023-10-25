@@ -1,16 +1,16 @@
 <div class="relative">
-  <ng-container *ngIf="nSolved == nTotal">
+  <!-- <ng-container *ngIf="nSolved$ == nTotal$ | async">
     <div class="absolute w-full h-full flex flex-column align-items-center">
       <div class="mt-4 mb-2 text-2xl font-medium">Congratulations!</div>
       <app-button-confetti
         [isCompleted]="nSolved == nTotal"
       ></app-button-confetti>
     </div>
-  </ng-container>
+  </ng-container> -->
 
   <div class="flex flex-wrap m-3">
     <app-button
-      *ngFor="let button of buttons"
+      *ngFor="let button of buttons$ | async"
       [label]="button.label"
       [id]="button.id"
       [state]="button.state"
