@@ -12,7 +12,7 @@ export class ButtonConfettiComponent {
     private store: AppStoreService,
     private windowService: WindowService
   ) {
-    this.store.isDone$.subscribe((x) => {
+    this.store.isDone$.subscribe(() => {
       this.windowService.window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
