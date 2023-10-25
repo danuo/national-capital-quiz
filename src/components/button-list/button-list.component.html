@@ -1,0 +1,11 @@
+<div class="flex flex-wrap m-3">
+  <ng-container *ngFor="let button of buttons$ | async">
+    <app-button
+      [label]="button.label"
+      [id]="button.id"
+      [state]="button.state"
+      [parent]="this"
+    >
+    </app-button>
+  </ng-container>
+</div>

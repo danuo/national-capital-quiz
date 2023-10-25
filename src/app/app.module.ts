@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ButtonConfettiComponent } from './button-confetti/button-confetti.component';
-import { ButtonListComponent } from './button-list/button-list.component';
-import { ButtonComponent } from './button/button.component';
-import { WindowService } from './window.service';
+import { AppComponent } from 'src/app/app.component';
+import { AppMenuComponent } from 'src/components/app-menu/app-menu.component';
+import { ButtonConfettiComponent } from 'src/components/button-confetti/button-confetti.component';
+import { ButtonListComponent } from 'src/components/button-list/button-list.component';
+import { ButtonComponent } from 'src/components/button/button.component';
+import { AppStoreService } from 'src/services/app-store.service';
+import { DataInitService } from 'src/services/data-init.service';
+import { WindowService } from 'src/services/window.service';
 
 @NgModule({
   declarations: [
@@ -16,15 +18,15 @@ import { WindowService } from './window.service';
     ButtonListComponent,
     ButtonComponent,
     ButtonConfettiComponent,
+    AppMenuComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ButtonModule,
     DividerModule,
     BrowserAnimationsModule,
   ],
-  providers: [WindowService],
+  providers: [WindowService, AppStoreService, DataInitService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
