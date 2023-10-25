@@ -11,6 +11,8 @@ import { ButtonComponent } from 'src/components/button/button.component';
 import { AppStoreService } from 'src/services/app-store.service';
 import { DataInitService } from 'src/services/data-init.service';
 import { WindowService } from 'src/services/window.service';
+import { ButtonRefreshComponent } from '../components/button-refresh/button-refresh.component';
+import { DisplayProgressComponent } from '../components/display-progress/display-progress.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { WindowService } from 'src/services/window.service';
     ButtonComponent,
     ButtonConfettiComponent,
     AppMenuComponent,
+    ButtonRefreshComponent,
+    DisplayProgressComponent,
   ],
   imports: [
     BrowserModule,

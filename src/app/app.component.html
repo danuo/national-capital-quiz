@@ -5,10 +5,14 @@
         National Capital Quiz
       </div>
       <div class="font-medium text-500 mb-3">
-        Try to pair every country with it's capital city.
+        Try to pair every country with it's capital city. <br />
       </div>
-      <app-app-menu></app-app-menu>
       <div class="border-2 border-dashed surface-border">
+        <div class="flex flex-wrap align-items-center m-3">
+          <app-button-refresh></app-button-refresh>
+          <app-display-progress ngClass="pl-2"></app-display-progress>
+        </div>
+
         <div class="relative">
           <ng-container *ngIf="isDone$ | async">
             <div
