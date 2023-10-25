@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
+import { AppStoreService } from 'src/shared/store';
 import { WindowService } from '../../services/window.service';
 
 @Component({
@@ -6,16 +7,17 @@ import { WindowService } from '../../services/window.service';
   templateUrl: './button-confetti.component.html',
   styleUrls: ['./button-confetti.component.css'],
 })
-export class ButtonConfettiComponent implements OnChanges {
-  @Input() isCompleted!: boolean;
-  window: any = null;
+export class ButtonConfettiComponent {
+  private window: any = null;
 
-  constructor(private windowService: WindowService) {
+  constructor(
+    private store: AppStoreService,
+    private windowService: WindowService
+  ) {
     this.window = this.windowService.nativeWindow;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.store.isDone$.subscribe((x) => {
+      this.window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   randomInRange(min: number, max: number): number {
@@ -23,7 +25,7 @@ export class ButtonConfettiComponent implements OnChanges {
   }
 
   onClick() {
-    this.window.confetti({
+    this.windowService.nativeWindow.confetti({
       angle: this.randomInRange(55, 125),
       spread: this.randomInRange(50, 70),
       particleCount: this.randomInRange(50, 100),
