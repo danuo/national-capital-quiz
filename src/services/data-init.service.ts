@@ -18,17 +18,14 @@ export class DataInitService {
     let dataSelection: StringObject = {};
     if (Object.keys(this.data).length > state.nMax) {
       const shuffledKeys = shuffle(Object.keys(this.data));
-      const randomSubsetKeys = take(shuffledKeys, state.nTotal);
+      const randomSubsetKeys = take(shuffledKeys, state.nMax);
       dataSelection = pick(this.data, randomSubsetKeys);
     } else {
       dataSelection = this.data;
     }
 
-    let nTotal = Object.keys(dataSelection).length;
-
     // create mapping for correct result
     const dataInv = invert(dataSelection);
-    let correctResultMapping = { ...dataSelection, ...dataInv };
 
     // create data for the buttons
     const allButtonLabels = [
@@ -44,6 +41,9 @@ export class DataInitService {
         state: '',
       };
     });
+
+    let nTotal = Object.keys(dataSelection).length;
+    let correctResultMapping = { ...dataSelection, ...dataInv };
 
     this.store.patchState({ nTotal });
     this.store.patchState({ correctResultMapping });
