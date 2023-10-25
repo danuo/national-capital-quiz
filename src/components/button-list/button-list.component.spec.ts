@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ButtonListComponent } from './button-list.component';
+import { ButtonListComponent } from 'src/components/button-list/button-list.component';
 
 describe('ButtonListComponent', () => {
   let component: ButtonListComponent;
@@ -8,7 +8,7 @@ describe('ButtonListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ButtonListComponent]
+      declarations: [ButtonListComponent],
     });
     fixture = TestBed.createComponent(ButtonListComponent);
     component = fixture.componentInstance;

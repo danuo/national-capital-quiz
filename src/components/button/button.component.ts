@@ -13,7 +13,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { AppLogicService } from 'src/app/app-logic.service';
-import { ButtonListComponent } from '../button-list/button-list.component';
+import { ButtonListComponent } from 'src/components/button-list/button-list.component';
 
 @Component({
   selector: 'app-button',
