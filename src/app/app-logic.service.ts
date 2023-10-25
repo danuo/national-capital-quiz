@@ -4,6 +4,7 @@ import { AppStoreService } from 'src/services/app-store.service';
 import { DataInitService } from 'src/services/data-init.service';
 
 import { ButtonData } from 'src/shared/shared-types';
+
 @Injectable({
   providedIn: 'root',
 })
