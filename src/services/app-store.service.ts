@@ -41,8 +41,8 @@ export class AppStoreService extends ComponentStore<MyState> {
 
   readonly isDone$ = this.nTotal$.pipe(
     combineLatestWith(this.nSolved$),
-    map(([v1, v2]) => {
-      return v1 == v2;
+    map(([nTotal, nSolved]) => {
+      return nTotal == nSolved;
     })
   );
 }
