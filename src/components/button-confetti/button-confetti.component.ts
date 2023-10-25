@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { WindowService } from '../window.service';
+import { WindowService } from '../../services/window.service';
 
 @Component({
   selector: 'app-button-confetti',
