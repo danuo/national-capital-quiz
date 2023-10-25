@@ -6,6 +6,7 @@ import { ButtonData, StringObject } from 'src/shared/shared-types';
 export interface MyState {
   buttons: ButtonData[];
   correctResultMapping: StringObject;
+  nMax: number;
   nTotal: number;
   nSolved: number;
   selectedIndex: number | null;
@@ -18,7 +19,8 @@ export class AppStoreService extends ComponentStore<MyState> {
     super({
       buttons: [],
       correctResultMapping: {},
-      nTotal: 10,
+      nMax: 10,
+      nTotal: 0,
       nSolved: 0,
       selectedIndex: null,
     });
