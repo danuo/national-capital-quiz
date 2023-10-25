@@ -9,7 +9,7 @@ function _window(): any {
 })
 export class WindowService {
   constructor() {}
-  get nativeWindow(): any {
+  get window(): any {
     return _window();
   }
 }

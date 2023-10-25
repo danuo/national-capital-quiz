@@ -8,15 +8,12 @@ import { WindowService } from '../../services/window.service';
   styleUrls: ['./button-confetti.component.css'],
 })
 export class ButtonConfettiComponent {
-  private window: any = null;
-
   constructor(
     private store: AppStoreService,
     private windowService: WindowService
   ) {
-    this.window = this.windowService.nativeWindow;
     this.store.isDone$.subscribe((x) => {
-      this.window.scrollTo({ top: 0, behavior: 'smooth' });
+      this.windowService.window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -25,7 +22,7 @@ export class ButtonConfettiComponent {
   }
 
   onClick() {
-    this.windowService.nativeWindow.confetti({
+    this.windowService.window.confetti({
       angle: this.randomInRange(55, 125),
       spread: this.randomInRange(50, 70),
       particleCount: this.randomInRange(50, 100),
