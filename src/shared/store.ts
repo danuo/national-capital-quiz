@@ -1,13 +1,28 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable } from 'rxjs';
+import { ButtonData, StringObject } from 'src/shared/shared-types';
 
 export interface MyState {
-  status: number;
+  buttons: ButtonData[];
+  correctResultMapping: StringObject;
+  nTotal: number;
+  nSolved: number;
+  selectedIndex: number | null;
 }
 
-@Injectable()
-export class MyStore extends ComponentStore<MyState> {
+@Injectable({ providedIn: 'root' })
+export class AppStoreService extends ComponentStore<MyState> {
+  // init state in constructor
+  constructor() {
+    super({
+      buttons: [],
+      correctResultMapping: {},
+      nTotal: 10,
+      nSolved: 0,
+      selectedIndex: null,
+    });
+  }
+
   // read state
-  readonly status$: Observable<number> = this.select((state) => state.status);
+  // readonly status$: Observable<number> = this.select((state) => state.status);
 }
