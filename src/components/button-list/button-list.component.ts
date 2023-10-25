@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { invert, pick, shuffle, take } from 'lodash';
 import { AppLogicService } from 'src/app/app-logic.service';
+import { DataInitService } from 'src/services/data-init.service';
 import { ButtonData, StringObject } from 'src/shared/shared-types';
+import { AppStoreService } from 'src/shared/store';
 
 @Component({
   selector: 'app-button-list',
@@ -16,41 +17,22 @@ export class ButtonListComponent implements OnInit {
   nSolved: number = 0;
   selectedIndex: number | null = null;
 
-  constructor(private appLogic: AppLogicService) {}
+  constructor(
+    private appLogic: AppLogicService,
+    private dataInit: DataInitService,
+    private store: AppStoreService
+  ) {}
 
   ngOnInit() {
     this.appLogic.reload();
 
-    this.nSolved = 0;
+    this.dataInit.refreshQuizData();
+    let state = this.store.state();
 
-    // select {{nTotal}} country/city pairs
-    let dataSelection: StringObject = {};
-    if (Object.keys(this.data).length > this.nTotal) {
-      const shuffledKeys = shuffle(Object.keys(this.data));
-      const randomSubsetKeys = take(shuffledKeys, this.nTotal);
-      dataSelection = pick(this.data, randomSubsetKeys);
-    } else {
-      dataSelection = this.data;
-    }
-    this.nTotal = Object.keys(dataSelection).length;
-
-    // create mapping for correct result
-    const dataInv = invert(dataSelection);
-    this.correctResultMapping = { ...dataSelection, ...dataInv };
-
-    // create data for the buttons
-    const allButtonLabels = [
-      ...Object.keys(dataSelection),
-      ...Object.values(dataSelection),
-    ];
-    const shuffledButtonLabels = shuffle(allButtonLabels);
-    this.buttons = shuffledButtonLabels.map((item, index) => {
-      return {
-        label: item,
-        id: index,
-        state: '',
-      };
-    });
+    this.nSolved = state.nSolved;
+    this.nTotal = state.nTotal;
+    this.correctResultMapping = state.correctResultMapping;
+    this.buttons = state.buttons;
   }
 
   handleClick(newIndex: number) {
