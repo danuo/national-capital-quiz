@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
-import { AppStoreService } from 'src/shared/store';
+import { AppStoreService } from 'src/services/app-store.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

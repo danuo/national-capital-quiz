@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppStoreService } from 'src/shared/store';
+import { AppStoreService } from 'src/services/app-store.service';
 import { WindowService } from '../../services/window.service';
 
 @Component({

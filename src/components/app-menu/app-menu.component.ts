@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppLogicService } from 'src/app/app-logic.service';
-import { AppStoreService } from 'src/shared/store';
+import { AppStoreService } from 'src/services/app-store.service';
 
 @Component({
   selector: 'app-app-menu',

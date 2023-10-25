@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AppStoreService } from 'src/services/app-store.service';
 import { DataInitService } from 'src/services/data-init.service';
-import { AppStoreService } from 'src/shared/store';
 
 @Injectable({
   providedIn: 'root',
