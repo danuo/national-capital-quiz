@@ -9,6 +9,7 @@ import { ButtonListComponent } from 'src/components/button-list/button-list.comp
 import { ButtonComponent } from 'src/components/button/button.component';
 import { DataInitService } from 'src/services/data-init.service';
 import { AppStoreService } from 'src/shared/store';
+import { AppMenuComponent } from '../components/app-menu/app-menu.component';
 import { WindowService } from '../services/window.service';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { WindowService } from '../services/window.service';
     ButtonListComponent,
     ButtonComponent,
     ButtonConfettiComponent,
+    AppMenuComponent,
   ],
   imports: [
     BrowserModule,
