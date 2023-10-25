@@ -65,7 +65,6 @@ export class ButtonListComponent implements OnInit {
       this.buttons[newIndex].state = 'done';
       this.buttons[this.selectedIndex].state = 'done';
       this.selectedIndex = null;
-      this.nSolved = this.getNSolved();
       return;
     } else {
       // incorrect pair selected
@@ -74,16 +73,5 @@ export class ButtonListComponent implements OnInit {
       this.selectedIndex = null;
       return;
     }
-  }
-
-  getNSolved() {
-    let nSolved = 0;
-    for (let button of this.buttons) {
-      if (button.state == 'done') {
-        nSolved++;
-      }
-    }
-    nSolved = nSolved / 2;
-    return nSolved;
   }
 }
