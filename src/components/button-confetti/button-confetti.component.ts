@@ -8,12 +8,17 @@ import { WindowService } from 'src/services/window.service';
   styleUrls: ['./button-confetti.component.css'],
 })
 export class ButtonConfettiComponent {
+  previousIsDone: boolean = false;
+
   constructor(
     private store: AppStoreService,
     private windowService: WindowService
   ) {
-    this.store.isDone$.subscribe(() => {
-      this.windowService.window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.store.isDone$.subscribe((isDone) => {
+      if (this.previousIsDone == false && isDone == true) {
+        this.windowService.window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      this.previousIsDone = isDone;
     });
   }
 
