@@ -4,12 +4,12 @@
     [outlined]="true"
     (click)="decrement()"
   ></p-button>
-  <div class="relative">
-    <div class="absolute w-full flex justify-content-center">
-      <app-display-progress ngClass=""></app-display-progress>
+  <div class="relative" style="width: 4rem">
+    <div
+      class="absolute h-full w-full flex justify-content-center align-items-center"
+    >
+      <i class="pi pi-sort-alt" style="font-size: 1.5rem"></i>
     </div>
-    <!-- invisible text element so that button spacing is constant while quiz is solved -->
-    <div class="ml-3 mr-3 text-xl" style="visibility: hidden">Solved 0/10</div>
   </div>
   <p-button
     icon="pi pi-plus"
