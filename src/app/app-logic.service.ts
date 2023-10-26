@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { AppStoreService } from 'src/services/app-store.service';
 import { DataInitService } from 'src/services/data-init.service';
-
 import { ButtonData } from 'src/shared/shared-types';
+
+const RANGE_MAX = 15;
+const RANGE_MIN = 1;
 
 @Injectable({
   providedIn: 'root',
@@ -14,14 +16,34 @@ export class AppLogicService {
     private store: AppStoreService
   ) {
     this.store.buttons$.subscribe((buttons) => {
-      console.log('yeeee');
       this.refreshNSolved(buttons);
+    });
+    this.store.nMax$.subscribe(() => {
+      this.refreshQuizData();
     });
     this.refreshQuizData();
   }
 
   refreshQuizData() {
     this.dataInit.refreshQuizData();
+  }
+
+  increment() {
+    let state = this.store.state();
+    let nMax = state.nMax + 1;
+    if (nMax > RANGE_MAX) {
+      return;
+    }
+    this.store.patchState({ nMax });
+  }
+
+  decrement() {
+    let state = this.store.state();
+    let nMax = state.nMax - 1;
+    if (nMax < RANGE_MIN) {
+      return;
+    }
+    this.store.patchState({ nMax });
   }
 
   selectItem(newIndex: number) {
