@@ -81,7 +81,6 @@ export class AppLogicService {
       buttons[state.selectedIndex].state = 'red';
       this.store.patchState({ selectedIndex: null });
     }
-    console.log('this runs but doesnt trigger buttons$ observer');
     this.store.patchState({ buttons: buttons });
   }
 

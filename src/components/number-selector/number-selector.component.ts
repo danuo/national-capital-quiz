@@ -12,7 +12,6 @@ export class NumberSelectorComponent {
   constructor(private appLogic: AppLogicService) {}
 
   increment() {
-    console.log('increem');
     this.appLogic.increment();
   }
 
