@@ -37,7 +37,7 @@ export class DataInitService {
     let buttons = shuffledButtonLabels.map((item, index) => {
       return {
         label: item,
-        id: index, // todo: remove
+        id: index,
         state: '',
       };
     });

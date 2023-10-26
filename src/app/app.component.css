@@ -1,9 +1,32 @@
 .container-outer {
   display: flex;
   justify-content: center;
-  align-items: center;
   min-height: 100%;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .container-outer {
+    margin-top: 0rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .container-outer {
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1900px) {
+  .container-outer {
+    margin-top: 7rem;
+  }
+}
+
+@media (min-width: 1901px) {
+  .container-outer {
+    margin-top: 20vh;
+  }
 }
 
 .container-inner {

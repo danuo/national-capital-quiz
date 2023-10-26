@@ -1,0 +1,19 @@
+<div class="flex w-full flex-wrap justify-content-center align-items-center">
+  <p-button
+    icon="pi pi-minus"
+    [outlined]="true"
+    (click)="decrement()"
+  ></p-button>
+  <div class="relative" style="width: 4rem">
+    <div
+      class="absolute h-full w-full flex justify-content-center align-items-center"
+    >
+      <i class="pi pi-sort-alt" style="font-size: 1.5rem"></i>
+    </div>
+  </div>
+  <p-button
+    icon="pi pi-plus"
+    [outlined]="true"
+    (click)="increment()"
+  ></p-button>
+</div>
