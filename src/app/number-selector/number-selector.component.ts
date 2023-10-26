@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AppStoreService } from 'src/services/app-store.service';
 import { AppLogicService } from '../app-logic.service';
 
 @Component({
@@ -10,13 +9,14 @@ import { AppLogicService } from '../app-logic.service';
 export class NumberSelectorComponent {
   nMax: number = 10;
 
-  constructor(
-    private store: AppStoreService,
-    private appLogic: AppLogicService
-  ) {}
+  constructor(private appLogic: AppLogicService) {}
 
-  onClick() {
-    this.store.patchState({ nMax: this.nMax });
-    this.appLogic.refreshQuizData();
+  increment() {
+    console.log('increem');
+    this.appLogic.increment();
+  }
+
+  decrement() {
+    this.appLogic.decrement();
   }
 }
