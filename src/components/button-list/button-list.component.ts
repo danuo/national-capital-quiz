@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { AppStoreService } from 'src/services/app-store.service';
-import { ButtonData } from 'src/shared/shared-types';
 
 @Component({
   selector: 'app-button-list',
@@ -14,7 +13,7 @@ export class ButtonListComponent {
 
   constructor(private store: AppStoreService) {}
 
-  trackByItem(index: number, item: ButtonData): string {
-    return item.label + String(index);
+  trackByItem(index: number, item: any): string {
+    return item.label + String(item.sessionId);
   }
 }
