@@ -2,12 +2,7 @@
   <ng-container
     *ngFor="let button of buttons$ | async; index as i; trackBy: trackByItem"
   >
-    <app-button
-      [label]="button.label"
-      [state]="button.state"
-      [id]="i"
-      [parent]="this"
-    >
+    <app-button [label]="button.label" [state]="button.state" [id]="i">
     </app-button>
   </ng-container>
 </div>

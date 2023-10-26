@@ -12,7 +12,6 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { ButtonListComponent } from 'src/components/button-list/button-list.component';
 import { AppStoreService } from 'src/services/app-store.service';
 
 @Component({
@@ -49,7 +48,6 @@ export class ButtonComponent implements OnInit, OnChanges {
   @Input() label!: string;
   @Input() id!: number;
   @Input() state!: string;
-  @Input() parent!: ButtonListComponent;
 
   constructor(private store: AppStoreService) {}
 
