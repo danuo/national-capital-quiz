@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppLogicService } from '../../app/app-logic.service';
+import { AppStoreService } from 'src/services/app-store.service';
 
 @Component({
   selector: 'app-number-selector',
@@ -9,13 +9,13 @@ import { AppLogicService } from '../../app/app-logic.service';
 export class NumberSelectorComponent {
   nMax: number = 10;
 
-  constructor(private appLogic: AppLogicService) {}
+  constructor(private store: AppStoreService) {}
 
   increment() {
-    this.appLogic.increment();
+    this.store.increment();
   }
 
   decrement() {
-    this.appLogic.decrement();
+    this.store.decrement();
   }
 }
