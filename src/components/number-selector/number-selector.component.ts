@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppLogicService } from '../app-logic.service';
+import { AppLogicService } from '../../app/app-logic.service';
 
 @Component({
   selector: 'app-number-selector',
