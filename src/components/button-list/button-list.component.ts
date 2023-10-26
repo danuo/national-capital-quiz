@@ -15,6 +15,6 @@ export class ButtonListComponent {
   constructor(private store: AppStoreService) {}
 
   trackByItem(index: number, item: ButtonData): string {
-    return item.label + String(item.id);
+    return item.label + String(index);
   }
 }

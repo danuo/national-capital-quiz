@@ -32,10 +32,9 @@ export class DataInitService {
     ];
     const shuffledButtonLabels = shuffle(allButtonLabels);
 
-    let buttons = shuffledButtonLabels.map((item, index) => {
+    let buttons = shuffledButtonLabels.map((item) => {
       return {
         label: item,
-        id: index,
         state: '',
       };
     });
