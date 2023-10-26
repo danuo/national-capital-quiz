@@ -11,7 +11,7 @@ export class DataInitService {
     this.data = countryData;
   }
 
-  refreshQuizData(nMax: number) {
+  getRandomQuizData(nMax: number) {
     // select nMax country/city pairs
     let dataSelection: StringObject = {};
     if (Object.keys(this.data).length > nMax) {
@@ -32,16 +32,7 @@ export class DataInitService {
     ];
     const shuffledButtonLabels = shuffle(allButtonLabels);
 
-    let buttons = shuffledButtonLabels.map((item) => {
-      return {
-        label: item,
-        state: '',
-      };
-    });
-
-    let nTotal = Object.keys(dataSelection).length;
     let correctResultMapping = { ...dataSelection, ...dataInv };
-
-    return { nTotal, correctResultMapping, buttons };
+    return { shuffledButtonLabels, correctResultMapping };
   }
 }
