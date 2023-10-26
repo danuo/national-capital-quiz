@@ -1,11 +1,8 @@
 <div class="flex flex-wrap m-3">
-  <ng-container *ngFor="let button of buttons$ | async; trackBy: trackByItem">
-    <app-button
-      [label]="button.label"
-      [id]="button.id"
-      [state]="button.state"
-      [parent]="this"
-    >
+  <ng-container
+    *ngFor="let button of buttons$ | async; index as i; trackBy: trackByItem"
+  >
+    <app-button [label]="button.label" [state]="button.state" [id]="i">
     </app-button>
   </ng-container>
 </div>

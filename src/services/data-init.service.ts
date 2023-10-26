@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { invert, pick, shuffle, take } from 'lodash';
-import { AppStoreService } from 'src/services/app-store.service';
 import { StringObject, countryData } from 'src/shared/shared-types';
 
 @Injectable({
@@ -8,17 +7,16 @@ import { StringObject, countryData } from 'src/shared/shared-types';
 })
 export class DataInitService {
   data: StringObject;
-  constructor(private store: AppStoreService) {
+  constructor() {
     this.data = countryData;
   }
 
-  refreshQuizData() {
-    let state = this.store.state();
-    // select {{nTotal}} country/city pairs
+  getRandomQuizData(nMax: number) {
+    // select nMax country/city pairs
     let dataSelection: StringObject = {};
-    if (Object.keys(this.data).length > state.nMax) {
+    if (Object.keys(this.data).length > nMax) {
       const shuffledKeys = shuffle(Object.keys(this.data));
-      const randomSubsetKeys = take(shuffledKeys, state.nMax);
+      const randomSubsetKeys = take(shuffledKeys, nMax);
       dataSelection = pick(this.data, randomSubsetKeys);
     } else {
       dataSelection = this.data;
@@ -34,19 +32,7 @@ export class DataInitService {
     ];
     const shuffledButtonLabels = shuffle(allButtonLabels);
 
-    let buttons = shuffledButtonLabels.map((item, index) => {
-      return {
-        label: item,
-        id: index,
-        state: '',
-      };
-    });
-
-    let nTotal = Object.keys(dataSelection).length;
     let correctResultMapping = { ...dataSelection, ...dataInv };
-
-    this.store.patchState({ nTotal });
-    this.store.patchState({ correctResultMapping });
-    this.store.patchState({ buttons });
+    return { shuffledButtonLabels, correctResultMapping };
   }
 }
