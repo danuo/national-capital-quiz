@@ -12,6 +12,7 @@ export interface MyState {
   nMax: number;
   nSolved: number;
   selectedIndex: number | null;
+  selectedIndices: number | null[];
 }
 
 const RANGE_MAX = 15;
@@ -52,6 +53,7 @@ export class AppStoreService extends ComponentStore<MyState> {
       nMax: 10,
       nSolved: 0,
       selectedIndex: null,
+      selectedIndices: [null, null],
     });
 
     this.buttons$.subscribe((buttons) => {
@@ -99,7 +101,15 @@ export class AppStoreService extends ComponentStore<MyState> {
     this.patchState({ nMax });
   }
 
-  selectItem(newIndex: number) {
+  selectItemOld(newIndex: number) {
+    let state = this.state();
+
+    if (state.selectedIndices[0] == null) {
+      this.patchState({ selectedIndices: [newIndex, null] });
+    }
+  }
+
+  selectItemOld(newIndex: number) {
     let state = this.state();
     let buttons = cloneDeep(state.buttons);
 
