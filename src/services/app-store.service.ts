@@ -10,7 +10,6 @@ export interface MyState {
   buttons: ButtonData[];
   correctResultMapping: StringObject;
   nMax: number;
-  nTotal: number;
   nSolved: number;
   selectedIndex: number | null;
 }
@@ -27,10 +26,13 @@ export class AppStoreService extends ComponentStore<MyState> {
     (state) => state.correctResultMapping
   );
   readonly nMax$: Observable<number> = this.select((state) => state.nMax);
-  readonly nTotal$: Observable<number> = this.select((state) => state.nTotal);
   readonly nSolved$: Observable<number> = this.select((state) => state.nSolved);
   readonly selectedIndex$: Observable<number | null> = this.select(
     (state) => state.selectedIndex
+  );
+
+  readonly nTotal$ = this.correctResultMapping$.pipe(
+    map((list: StringObject) => Object.keys(list).length / 2)
   );
 
   readonly isDone$ = this.nTotal$.pipe(
@@ -48,7 +50,6 @@ export class AppStoreService extends ComponentStore<MyState> {
       buttons: [],
       correctResultMapping: {},
       nMax: 10,
-      nTotal: 0,
       nSolved: 0,
       selectedIndex: null,
     });
@@ -66,7 +67,6 @@ export class AppStoreService extends ComponentStore<MyState> {
     // togglet session Id for trackByItem
     this.sessionId = (this.sessionId + 1) % 2;
     let newQuizData = this.dataInit.getRandomQuizData(this.state().nMax);
-    let nTotal = Object.keys(newQuizData.shuffledButtonLabels).length / 2;
     let buttons = newQuizData.shuffledButtonLabels.map((item) => {
       return {
         label: item,
@@ -78,7 +78,6 @@ export class AppStoreService extends ComponentStore<MyState> {
     this.patchState({
       buttons,
       correctResultMapping: newQuizData.correctResultMapping,
-      nTotal,
     });
   }
 
