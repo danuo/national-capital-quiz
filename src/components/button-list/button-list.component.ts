@@ -2,10 +2,21 @@ import { Component } from '@angular/core';
 
 import { AppStoreService } from 'src/services/app-store.service';
 
+const componentTemplate = `
+<div class="flex flex-wrap m-3">
+  <ng-container
+    *ngFor="let button of buttons$ | async; index as i; trackBy: trackByItem"
+  >
+    <app-button [label]="button.label" [state]="button.state" [id]="i">
+    </app-button>
+  </ng-container>
+</div>
+`;
+
 @Component({
   selector: 'app-button-list',
-  templateUrl: './button-list.component.html',
-  styleUrls: ['./button-list.component.css'],
+  template: componentTemplate,
+  styles: [],
 })
 export class ButtonListComponent {
   buttons$ = this.store.buttons$;
