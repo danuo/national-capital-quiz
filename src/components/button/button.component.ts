@@ -14,10 +14,23 @@ import {
 } from '@angular/core';
 import { AppStoreService } from 'src/services/app-store.service';
 
+const componentTemplate = `
+<p-button
+  [label]="label"
+  class="flex align-items-center justify-content-center m-2"
+  (click)="onClick()"
+  [@buttonAnimation]="state == 'done' ? 'done' : 'normal'"
+  [outlined]="outlined"
+  [severity]="severity"
+  [disabled]="state == 'done'"
+>
+</p-button>
+`;
+
 @Component({
   selector: 'app-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css'],
+  template: componentTemplate,
+  styles: [],
   animations: [
     trigger('buttonAnimation', [
       state('done', style({ opacity: 0, transform: 'translateY(500%)' })),
