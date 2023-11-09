@@ -15,11 +15,11 @@ const componentTemplate = `
 `;
 
 @Component({
-  selector: 'app-button-confetti',
+  selector: 'app-confetti-button',
   template: componentTemplate,
   styles: [],
 })
-export class ButtonConfettiComponent {
+export class ConfettiButtonComponent {
   previousIsDone: boolean = false;
 
   constructor(

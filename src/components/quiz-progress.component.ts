@@ -6,11 +6,11 @@ const componentTemplate = `
 `;
 
 @Component({
-  selector: 'app-display-progress',
+  selector: 'app-quiz-progress',
   template: componentTemplate,
   styles: [],
 })
-export class DisplayProgressComponent {
+export class QuizProgressComponent {
   nSolved$ = this.store.nSolved$;
   nTotal$ = this.store.nTotal$;
 

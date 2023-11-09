@@ -28,7 +28,7 @@ const componentTemplate = `
   template: componentTemplate,
   styles: [],
 })
-export class NumberSelectorComponent {
+export class QuizSizeSelector {
   nMax: number = 10;
 
   constructor(private store: AppStoreService) {}

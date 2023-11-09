@@ -7,18 +7,18 @@ const componentTemplate = `
   <ng-container
     *ngFor="let button of buttons$ | async; index as i; trackBy: trackByItem"
   >
-    <app-button [label]="button.label" [state]="button.state" [id]="i">
-    </app-button>
+    <app-quiz-element-button [label]="button.label" [state]="button.state" [id]="i">
+    </app-quiz-element-button>
   </ng-container>
 </div>
 `;
 
 @Component({
-  selector: 'app-button-list',
+  selector: 'app-quiz-element-list',
   template: componentTemplate,
   styles: [],
 })
-export class ButtonListComponent {
+export class QuizElementListComponent {
   buttons$ = this.store.buttons$;
   isDone$ = this.store.isDone$;
 

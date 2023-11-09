@@ -4,12 +4,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { AppComponent } from 'src/app/app.component';
-import { ButtonConfettiComponent } from 'src/components/button-confetti.component';
-import { ButtonListComponent } from 'src/components/button-list.component';
-import { ButtonRefreshComponent } from 'src/components/button-refresh.component';
-import { ButtonComponent } from 'src/components/button.component';
-import { DisplayProgressComponent } from 'src/components/display-progress.component';
-import { NumberSelectorComponent } from 'src/components/number-selector.component';
+import { ConfettiButtonComponent } from 'src/components/confetti-button.component';
+import { QuizElementButtonComponent } from 'src/components/quiz-element-button.component';
+import { QuizElementListComponent } from 'src/components/quiz-element-list.component';
+import { QuizProgressComponent } from 'src/components/quiz-progress.component';
+import { QuizSizeSelector } from 'src/components/quiz-size-selector.component';
+import { RefreshButtonComponent } from 'src/components/refresh-button.component';
 import { AppStoreService } from 'src/services/app-store.service';
 import { DataInitService } from 'src/services/data-init.service';
 import { WindowService } from 'src/services/window.service';
@@ -17,12 +17,12 @@ import { WindowService } from 'src/services/window.service';
 @NgModule({
   declarations: [
     AppComponent,
-    ButtonListComponent,
-    ButtonComponent,
-    ButtonConfettiComponent,
-    ButtonRefreshComponent,
-    DisplayProgressComponent,
-    NumberSelectorComponent,
+    QuizElementListComponent,
+    QuizElementButtonComponent,
+    ConfettiButtonComponent,
+    RefreshButtonComponent,
+    QuizProgressComponent,
+    QuizSizeSelector,
   ],
   imports: [
     BrowserModule,

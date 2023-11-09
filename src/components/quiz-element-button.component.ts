@@ -28,7 +28,7 @@ const componentTemplate = `
 `;
 
 @Component({
-  selector: 'app-button',
+  selector: 'app-quiz-element-button',
   template: componentTemplate,
   styles: [],
   animations: [
@@ -57,7 +57,7 @@ const componentTemplate = `
     ]),
   ],
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class QuizElementButtonComponent implements OnInit, OnChanges {
   @Input() label!: string;
   @Input() id!: number;
   @Input() state!: string;

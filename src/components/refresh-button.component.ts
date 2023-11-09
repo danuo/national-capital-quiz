@@ -13,11 +13,11 @@ const componentTemplate = `
 `;
 
 @Component({
-  selector: 'app-button-refresh',
+  selector: 'app-refresh-button',
   template: componentTemplate,
   styles: [],
 })
-export class ButtonRefreshComponent {
+export class RefreshButtonComponent {
   constructor(private store: AppStoreService) {}
 
   refresh() {
