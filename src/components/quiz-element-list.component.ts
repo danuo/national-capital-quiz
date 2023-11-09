@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AppStoreService } from 'src/services/app-store.service';
+import { ButtonData } from 'src/shared/shared-types';
 
 const componentTemplate = `
 <div class="flex flex-wrap m-3">
@@ -24,7 +25,7 @@ export class QuizElementListComponent {
 
   constructor(private store: AppStoreService) {}
 
-  trackByItem(index: number, item: any): string {
+  trackByItem(index: number, item: ButtonData): string {
     return item.label + String(item.sessionId);
   }
 }
