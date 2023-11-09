@@ -2,10 +2,22 @@ import { Component } from '@angular/core';
 import { AppStoreService } from 'src/services/app-store.service';
 import { WindowService } from 'src/services/window.service';
 
+const componentTemplate = `
+<p-button
+  icon="pi pi-heart"
+  [rounded]="true"
+  severity="help"
+  [outlined]="true"
+  (click)="onClick()"
+  [raised]="true"
+  size="large"
+></p-button>
+`;
+
 @Component({
   selector: 'app-button-confetti',
-  templateUrl: './button-confetti.component.html',
-  styleUrls: ['./button-confetti.component.css'],
+  template: componentTemplate,
+  styles: [],
 })
 export class ButtonConfettiComponent {
   previousIsDone: boolean = false;
