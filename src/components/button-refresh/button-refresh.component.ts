@@ -1,10 +1,21 @@
 import { Component } from '@angular/core';
 import { AppStoreService } from 'src/services/app-store.service';
 
+const componentTemplate = `
+<p-button
+  label="refresh"
+  class="m-2"
+  severity="help"
+  [outlined]="false"
+  (click)="refresh()"
+>
+</p-button>
+`;
+
 @Component({
   selector: 'app-button-refresh',
-  templateUrl: './button-refresh.component.html',
-  styleUrls: ['./button-refresh.component.css'],
+  template: componentTemplate,
+  styles: [],
 })
 export class ButtonRefreshComponent {
   constructor(private store: AppStoreService) {}
