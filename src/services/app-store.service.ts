@@ -40,6 +40,9 @@ export class AppStoreService extends ComponentStore<MyState> {
   readonly selectedIndex$: Observable<number | null> = this.select(
     (state) => state.selectedIndex
   );
+  readonly sessionId$: Observable<number> = this.select(
+    (state) => state.sessionId
+  );
 
   readonly nTotal$: Observable<number> = this.correctResultMapping$.pipe(
     map((list: StringObject) => Object.keys(list).length / 2)
@@ -53,12 +56,12 @@ export class AppStoreService extends ComponentStore<MyState> {
   );
 
   readonly buttonsNew$: Observable<ButtonData[]> = this.buttonsLabels$.pipe(
-    combineLatestWith(this.buttonsDone$),
-    map(([labels, dones]) => {
+    combineLatestWith(this.buttonsDone$, this.sessionId$),
+    map(([labels, dones, sessionId]) => {
       return labels.map((label, index) => {
         let done = dones[index];
         let state = 'todo';
-        let out: ButtonData = { label, state, sessionId: 0 };
+        let out: ButtonData = { label, state, sessionId };
         return out;
       });
     })
@@ -110,6 +113,7 @@ export class AppStoreService extends ComponentStore<MyState> {
       buttonsLabels: newQuizData.shuffledButtonLabels,
       buttonsDone,
       correctResultMapping: newQuizData.correctResultMapping,
+      sessionId,
     });
   }
 
