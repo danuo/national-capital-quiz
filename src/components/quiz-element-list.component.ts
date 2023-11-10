@@ -20,7 +20,7 @@ const componentTemplate = `
   styles: [],
 })
 export class QuizElementListComponent {
-  buttonsNew$ = this.store.buttonsNew$;
+  buttonsNew$ = this.store.buttons;
   isDone$ = this.store.isDone$;
 
   constructor(private store: AppStoreService) {}

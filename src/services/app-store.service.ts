@@ -11,8 +11,8 @@ import {
 import { cloneDeep } from 'lodash';
 
 export interface MyState {
-  buttonsLabels: string[];
-  buttonsDone: boolean[];
+  buttonLabels: string[];
+  buttonDoneState: boolean[];
   correctResultMapping: StringObject;
   nMax: number;
   selectedIndices: number[];
@@ -24,22 +24,26 @@ const RANGE_MIN = 1;
 
 @Injectable({ providedIn: 'root' })
 export class AppStoreService extends ComponentStore<MyState> {
-  readonly buttonsLabels$: Observable<string[]> = this.select(
-    (state) => state.buttonsLabels
+  private readonly buttonsLabels$: Observable<string[]> = this.select(
+    (state) => state.buttonLabels
   );
-  readonly buttonsDone$: Observable<boolean[]> = this.select(
-    (state) => state.buttonsDone
-  );
-  readonly correctResultMapping$: Observable<StringObject> = this.select(
-    (state) => state.correctResultMapping
-  );
-  readonly nMax$: Observable<number> = this.select((state) => state.nMax);
 
-  readonly selectedIndices$: Observable<number[]> = this.select(
+  private readonly buttonsDone$: Observable<boolean[]> = this.select(
+    (state) => state.buttonDoneState
+  );
+
+  private readonly correctResultMapping$: Observable<StringObject> =
+    this.select((state) => state.correctResultMapping);
+
+  private readonly nMax$: Observable<number> = this.select(
+    (state) => state.nMax
+  );
+
+  private readonly selectedIndices$: Observable<number[]> = this.select(
     (state) => state.selectedIndices
   );
 
-  readonly sessionId$: Observable<number> = this.select(
+  private readonly sessionId$: Observable<number> = this.select(
     (state) => state.sessionId
   );
 
@@ -59,14 +63,14 @@ export class AppStoreService extends ComponentStore<MyState> {
     })
   );
 
-  readonly isDone$: Observable<boolean> = this.nTotal$.pipe(
-    combineLatestWith(this.nSolved$),
+  readonly isDone$: Observable<boolean> = this.nSolved$.pipe(
+    combineLatestWith(this.nTotal$),
     map(([nTotal, nSolved]) => {
       return nTotal == nSolved;
     })
   );
 
-  readonly buttonsNew$: Observable<ButtonData[]> = this.selectedIndices$.pipe(
+  readonly buttons: Observable<ButtonData[]> = this.selectedIndices$.pipe(
     combineLatestWith(this.buttonsLabels$, this.buttonsDone$, this.sessionId$),
     map(([selectedIndices, labels, dones, sessionId]) => {
       return labels.map((label, index) => {
@@ -93,8 +97,8 @@ export class AppStoreService extends ComponentStore<MyState> {
 
   constructor(private dataInit: DataInitService) {
     super({
-      buttonsLabels: [],
-      buttonsDone: [],
+      buttonLabels: [],
+      buttonDoneState: [],
       correctResultMapping: {},
       nMax: 10,
       selectedIndices: [],
@@ -124,8 +128,8 @@ export class AppStoreService extends ComponentStore<MyState> {
     });
 
     this.patchState({
-      buttonsLabels: newQuizData.shuffledButtonLabels,
-      buttonsDone,
+      buttonLabels: newQuizData.shuffledButtonLabels,
+      buttonDoneState: buttonsDone,
       correctResultMapping: newQuizData.correctResultMapping,
       sessionId,
     });
@@ -174,15 +178,15 @@ export class AppStoreService extends ComponentStore<MyState> {
       return;
     }
 
-    let selectedName = state.buttonsLabels[state.selectedIndices[0]];
-    let newName = state.buttonsLabels[newIndex];
+    let selectedName = state.buttonLabels[state.selectedIndices[0]];
+    let newName = state.buttonLabels[newIndex];
 
     if (state.correctResultMapping[selectedName] == newName) {
       // correct pair
-      let buttonsDone = cloneDeep(state.buttonsDone);
+      let buttonsDone = cloneDeep(state.buttonDoneState);
       buttonsDone[state.selectedIndices[0]] = true;
       buttonsDone[newIndex] = true;
-      this.patchState({ buttonsDone, selectedIndices: [] });
+      this.patchState({ buttonDoneState: buttonsDone, selectedIndices: [] });
       return;
     } else {
       // incorrect pair
