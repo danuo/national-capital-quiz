@@ -15,10 +15,6 @@
         class="border-2 border-dashed surface-border"
         [ngStyle]="{ 'min-height': '400px' }"
       >
-        <div class="flex flex-wrap align-items-center m-3 mt-4">
-          <app-quiz-progress ngClass="pl-2"></app-quiz-progress>
-        </div>
-
         <div class="relative">
           <ng-container *ngIf="isDone$ | async">
             <div
