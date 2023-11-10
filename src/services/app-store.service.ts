@@ -8,7 +8,7 @@ import {
   StringObject,
 } from 'src/shared/shared-types';
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep, sum } from 'lodash';
 
 export interface MyState {
   buttonLabels: string[];
@@ -52,15 +52,7 @@ export class AppStoreService extends ComponentStore<MyState> {
   );
 
   readonly nSolved$: Observable<number> = this.buttonDoneStates$.pipe(
-    map((list: boolean[]) => {
-      let counter = 0;
-      list.forEach((item) => {
-        if (item) {
-          counter++;
-        }
-      });
-      return counter / 2;
-    })
+    map((buttonDoneStates: boolean[]) => sum(buttonDoneStates) / 2)
   );
 
   readonly isDone$: Observable<boolean> = this.nSolved$.pipe(
