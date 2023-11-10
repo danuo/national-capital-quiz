@@ -20,7 +20,6 @@ const componentTemplate = `
   styles: [],
 })
 export class QuizElementListComponent {
-  buttons$ = this.store.buttons$;
   buttonsNew$ = this.store.buttonsNew$;
   isDone$ = this.store.isDone$;
 
