@@ -89,8 +89,6 @@ export class AppStoreService extends ComponentStore<MyState> {
     })
   );
 
-  // sessionId for trackByItem to trigger animations (to get Berlin != Berlin after reload)
-
   constructor(private dataInit: DataInitService) {
     super({
       buttonLabels: [],
@@ -108,17 +106,9 @@ export class AppStoreService extends ComponentStore<MyState> {
   }
 
   refreshQuizData() {
-    // togglet session Id for trackByItem
     let state = this.state();
     let sessionId = (state.sessionId + 1) % 2;
     let newQuizData = this.dataInit.getRandomQuizData(this.state().nMax);
-    let buttons = newQuizData.shuffledButtonLabels.map((item) => {
-      return {
-        label: item,
-        state: '',
-        sessionId: 0,
-      };
-    });
     let buttonsDone = newQuizData.shuffledButtonLabels.map((item) => {
       return false;
     });
