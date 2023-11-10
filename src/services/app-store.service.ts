@@ -79,7 +79,7 @@ export class AppStoreService extends ComponentStore<MyState> {
         if (done) {
           state = ButtonStates.Done;
         } else {
-          if (index in selectedIndices) {
+          if (selectedIndices.includes(index)) {
             if (selectedIndices.length == 1) {
               state = ButtonStates.Selected;
             } else if (selectedIndices.length == 2) {
