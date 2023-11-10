@@ -153,23 +153,23 @@ export class AppStoreService extends ComponentStore<MyState> {
     console.log(newIndex);
     let state = this.state();
 
-    // 0 items selected
     if (state.selectedIndices.length == 0) {
+      // 0 items selected -> set new index
       this.patchState({ selectedIndices: [newIndex] });
       return;
     }
 
-    // 2 items selected (incorrect pair)
     if (state.selectedIndices.length == 2) {
+      // 2 items selected (incorrect pair) -> set new index
       this.patchState({ selectedIndices: [newIndex] });
       return;
     }
 
+    // state.selectedIndices.length == 1
     // 1 items selected
-    // state.selectedIndices.length == 1)
 
     if (state.selectedIndices[0] == newIndex) {
-      // selected and clicked is the same
+      // selected and clicked is the same item -> deselect
       this.patchState({ selectedIndices: [] });
       return;
     }
