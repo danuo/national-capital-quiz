@@ -12,7 +12,7 @@ import { cloneDeep } from 'lodash';
 
 export interface MyState {
   buttonLabels: string[];
-  buttonDoneState: boolean[];
+  buttonDoneStates: boolean[];
   correctResultMapping: StringObject;
   nMax: number;
   selectedIndices: number[];
@@ -24,12 +24,12 @@ const RANGE_MIN = 1;
 
 @Injectable({ providedIn: 'root' })
 export class AppStoreService extends ComponentStore<MyState> {
-  private readonly buttonsLabels$: Observable<string[]> = this.select(
+  private readonly buttonLabels$: Observable<string[]> = this.select(
     (state) => state.buttonLabels
   );
 
-  private readonly buttonsDone$: Observable<boolean[]> = this.select(
-    (state) => state.buttonDoneState
+  private readonly buttonDoneStates$: Observable<boolean[]> = this.select(
+    (state) => state.buttonDoneStates
   );
 
   private readonly correctResultMapping$: Observable<StringObject> =
@@ -51,7 +51,7 @@ export class AppStoreService extends ComponentStore<MyState> {
     map((list: StringObject) => Object.keys(list).length / 2)
   );
 
-  readonly nSolved$: Observable<number> = this.buttonsDone$.pipe(
+  readonly nSolved$: Observable<number> = this.buttonDoneStates$.pipe(
     map((list: boolean[]) => {
       let counter = 0;
       list.forEach((item) => {
@@ -71,11 +71,15 @@ export class AppStoreService extends ComponentStore<MyState> {
   );
 
   readonly buttons: Observable<ButtonData[]> = this.selectedIndices$.pipe(
-    combineLatestWith(this.buttonsLabels$, this.buttonsDone$, this.sessionId$),
+    combineLatestWith(
+      this.buttonLabels$,
+      this.buttonDoneStates$,
+      this.sessionId$
+    ),
     map(([selectedIndices, labels, dones, sessionId]) => {
       return labels.map((label, index) => {
-        let state = ButtonStates.Default;
         let done = dones[index];
+        let state = ButtonStates.Default;
         if (done) {
           state = ButtonStates.Done;
         } else {
@@ -98,7 +102,7 @@ export class AppStoreService extends ComponentStore<MyState> {
   constructor(private dataInit: DataInitService) {
     super({
       buttonLabels: [],
-      buttonDoneState: [],
+      buttonDoneStates: [],
       correctResultMapping: {},
       nMax: 10,
       selectedIndices: [],
@@ -129,7 +133,7 @@ export class AppStoreService extends ComponentStore<MyState> {
 
     this.patchState({
       buttonLabels: newQuizData.shuffledButtonLabels,
-      buttonDoneState: buttonsDone,
+      buttonDoneStates: buttonsDone,
       correctResultMapping: newQuizData.correctResultMapping,
       sessionId,
     });
@@ -183,10 +187,10 @@ export class AppStoreService extends ComponentStore<MyState> {
 
     if (state.correctResultMapping[selectedName] == newName) {
       // correct pair
-      let buttonsDone = cloneDeep(state.buttonDoneState);
+      let buttonsDone = cloneDeep(state.buttonDoneStates);
       buttonsDone[state.selectedIndices[0]] = true;
       buttonsDone[newIndex] = true;
-      this.patchState({ buttonDoneState: buttonsDone, selectedIndices: [] });
+      this.patchState({ buttonDoneStates: buttonsDone, selectedIndices: [] });
       return;
     } else {
       // incorrect pair
