@@ -24,7 +24,7 @@ const componentTemplate = `
 `;
 
 @Component({
-  selector: 'app-number-selector',
+  selector: 'app-quiz-size-selector',
   template: componentTemplate,
   styles: [],
 })
