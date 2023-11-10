@@ -6,7 +6,7 @@ import { ButtonData } from 'src/shared/shared-types';
 const componentTemplate = `
 <div class="flex flex-wrap m-3">
   <ng-container
-    *ngFor="let button of buttons$ | async; index as i; trackBy: trackByItem"
+    *ngFor="let button of buttonsNew$ | async; index as i; trackBy: trackByItem"
   >
     <app-quiz-element-button [label]="button.label" [state]="button.state" [id]="i">
     </app-quiz-element-button>
@@ -21,6 +21,7 @@ const componentTemplate = `
 })
 export class QuizElementListComponent {
   buttons$ = this.store.buttons$;
+  buttonsNew$ = this.store.buttonsNew$;
   isDone$ = this.store.isDone$;
 
   constructor(private store: AppStoreService) {}
