@@ -2,17 +2,21 @@ import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, combineLatestWith, map } from 'rxjs';
 import { DataInitService } from 'src/services/data-init.service';
-import { ButtonData, StringObject } from 'src/shared/shared-types';
+import {
+  ButtonData,
+  ButtonStates,
+  StringObject,
+} from 'src/shared/shared-types';
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep, sum } from 'lodash';
 
 export interface MyState {
-  buttons: ButtonData[];
+  buttonLabels: string[];
+  buttonDoneStates: boolean[];
   correctResultMapping: StringObject;
   nMax: number;
-  nTotal: number;
-  nSolved: number;
-  selectedIndex: number | null;
+  selectedIndices: number[];
+  sessionId: number;
 }
 
 const RANGE_MAX = 15;
@@ -20,42 +24,81 @@ const RANGE_MIN = 1;
 
 @Injectable({ providedIn: 'root' })
 export class AppStoreService extends ComponentStore<MyState> {
-  readonly buttons$: Observable<ButtonData[]> = this.select(
-    (state) => state.buttons
-  );
-  readonly correctResultMapping$: Observable<StringObject> = this.select(
-    (state) => state.correctResultMapping
-  );
-  readonly nMax$: Observable<number> = this.select((state) => state.nMax);
-  readonly nTotal$: Observable<number> = this.select((state) => state.nTotal);
-  readonly nSolved$: Observable<number> = this.select((state) => state.nSolved);
-  readonly selectedIndex$: Observable<number | null> = this.select(
-    (state) => state.selectedIndex
+  private readonly buttonLabels$: Observable<string[]> = this.select(
+    (state) => state.buttonLabels
   );
 
-  readonly isDone$ = this.nTotal$.pipe(
-    combineLatestWith(this.nSolved$),
+  private readonly buttonDoneStates$: Observable<boolean[]> = this.select(
+    (state) => state.buttonDoneStates
+  );
+
+  private readonly correctResultMapping$: Observable<StringObject> =
+    this.select((state) => state.correctResultMapping);
+
+  private readonly nMax$: Observable<number> = this.select(
+    (state) => state.nMax
+  );
+
+  private readonly selectedIndices$: Observable<number[]> = this.select(
+    (state) => state.selectedIndices
+  );
+
+  private readonly sessionId$: Observable<number> = this.select(
+    (state) => state.sessionId
+  );
+
+  readonly nTotal$: Observable<number> = this.correctResultMapping$.pipe(
+    map((list: StringObject) => Object.keys(list).length / 2)
+  );
+
+  readonly nSolved$: Observable<number> = this.buttonDoneStates$.pipe(
+    map((buttonDoneStates: boolean[]) => sum(buttonDoneStates) / 2)
+  );
+
+  readonly isDone$: Observable<boolean> = this.nSolved$.pipe(
+    combineLatestWith(this.nTotal$),
     map(([nTotal, nSolved]) => {
       return nTotal == nSolved;
     })
   );
 
-  // sessionId for trackByItem to trigger animations (to get Berlin != Berlin after reload)
-  sessionId: number = 0;
+  readonly buttons: Observable<ButtonData[]> = this.selectedIndices$.pipe(
+    combineLatestWith(
+      this.buttonLabels$,
+      this.buttonDoneStates$,
+      this.sessionId$
+    ),
+    map(([selectedIndices, labels, dones, sessionId]) => {
+      return labels.map((label, index) => {
+        let done = dones[index];
+        let state = ButtonStates.Default;
+        if (done) {
+          state = ButtonStates.Done;
+        } else {
+          if (selectedIndices.includes(index)) {
+            if (selectedIndices.length == 1) {
+              state = ButtonStates.Selected;
+            } else if (selectedIndices.length == 2) {
+              state = ButtonStates.Red;
+            }
+          }
+        }
+        let out: ButtonData = { state, label, sessionId };
+        return out;
+      });
+    })
+  );
 
   constructor(private dataInit: DataInitService) {
     super({
-      buttons: [],
+      buttonLabels: [],
+      buttonDoneStates: [],
       correctResultMapping: {},
       nMax: 10,
-      nTotal: 0,
-      nSolved: 0,
-      selectedIndex: null,
+      selectedIndices: [],
+      sessionId: 0,
     });
 
-    this.buttons$.subscribe((buttons) => {
-      this.refreshNSolved(buttons);
-    });
     this.nMax$.subscribe(() => {
       this.refreshQuizData();
     });
@@ -63,22 +106,18 @@ export class AppStoreService extends ComponentStore<MyState> {
   }
 
   refreshQuizData() {
-    // togglet session Id for trackByItem
-    this.sessionId = (this.sessionId + 1) % 2;
+    let state = this.state();
+    let sessionId = (state.sessionId + 1) % 2;
     let newQuizData = this.dataInit.getRandomQuizData(this.state().nMax);
-    let nTotal = Object.keys(newQuizData.shuffledButtonLabels).length / 2;
-    let buttons = newQuizData.shuffledButtonLabels.map((item) => {
-      return {
-        label: item,
-        state: '',
-        sessionId: this.sessionId,
-      };
+    let buttonsDone = newQuizData.shuffledButtonLabels.map((item) => {
+      return false;
     });
 
     this.patchState({
-      buttons,
+      buttonLabels: newQuizData.shuffledButtonLabels,
+      buttonDoneStates: buttonsDone,
       correctResultMapping: newQuizData.correctResultMapping,
-      nTotal,
+      sessionId,
     });
   }
 
@@ -101,51 +140,46 @@ export class AppStoreService extends ComponentStore<MyState> {
   }
 
   selectItem(newIndex: number) {
+    console.log(newIndex);
     let state = this.state();
-    let buttons = cloneDeep(state.buttons);
 
-    let selectedName = '';
-    if (state.selectedIndex != null) {
-      selectedName = buttons[state.selectedIndex].label;
-    }
-    let newName = buttons[newIndex].label;
-
-    // reset buttons that are not done
-    for (let button of buttons) {
-      if (button.state != 'done') {
-        button.state = '';
-      }
+    if (state.selectedIndices.length == 0) {
+      // 0 items selected -> set new index
+      this.patchState({ selectedIndices: [newIndex] });
+      return;
     }
 
-    // only one selected
-    if (state.selectedIndex == null) {
-      this.patchState({ selectedIndex: newIndex });
-      buttons[newIndex].state = 'selected';
-    } else if (state.selectedIndex == newIndex) {
-      // same button clicked again
-      this.patchState({ selectedIndex: null });
-    } else if (state.correctResultMapping[selectedName] == newName) {
-      // correct pair selected
-      buttons[newIndex].state = 'done';
-      buttons[state.selectedIndex].state = 'done';
-      this.patchState({ selectedIndex: null });
+    if (state.selectedIndices.length == 2) {
+      // 2 items selected (incorrect pair) -> set new index
+      this.patchState({ selectedIndices: [newIndex] });
+      return;
+    }
+
+    // state.selectedIndices.length == 1
+    // 1 items selected
+
+    if (state.selectedIndices[0] == newIndex) {
+      // selected and clicked is the same item -> deselect
+      this.patchState({ selectedIndices: [] });
+      return;
+    }
+
+    let selectedName = state.buttonLabels[state.selectedIndices[0]];
+    let newName = state.buttonLabels[newIndex];
+
+    if (state.correctResultMapping[selectedName] == newName) {
+      // correct pair
+      let buttonsDone = cloneDeep(state.buttonDoneStates);
+      buttonsDone[state.selectedIndices[0]] = true;
+      buttonsDone[newIndex] = true;
+      this.patchState({ buttonDoneStates: buttonsDone, selectedIndices: [] });
+      return;
     } else {
-      // incorrect pair selected
-      buttons[newIndex].state = 'red';
-      buttons[state.selectedIndex].state = 'red';
-      this.patchState({ selectedIndex: null });
+      // incorrect pair
+      this.patchState({
+        selectedIndices: [state.selectedIndices[0], newIndex],
+      });
+      return;
     }
-    this.patchState({ buttons: buttons });
-  }
-
-  refreshNSolved(buttons: ButtonData[]) {
-    let nSolved = 0;
-    for (let button of buttons) {
-      if (button.state == 'done') {
-        nSolved++;
-      }
-    }
-    nSolved = nSolved / 2;
-    this.patchState({ nSolved });
   }
 }

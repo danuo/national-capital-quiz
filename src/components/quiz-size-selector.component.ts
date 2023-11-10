@@ -1,3 +1,7 @@
+import { Component } from '@angular/core';
+import { AppStoreService } from 'src/services/app-store.service';
+
+const componentTemplate = `
 <div class="flex w-full flex-wrap justify-content-center align-items-center">
   <p-button
     icon="pi pi-minus"
@@ -17,3 +21,23 @@
     (click)="increment()"
   ></p-button>
 </div>
+`;
+
+@Component({
+  selector: 'app-number-selector',
+  template: componentTemplate,
+  styles: [],
+})
+export class QuizSizeSelector {
+  nMax: number = 10;
+
+  constructor(private store: AppStoreService) {}
+
+  increment() {
+    this.store.increment();
+  }
+
+  decrement() {
+    this.store.decrement();
+  }
+}

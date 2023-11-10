@@ -13,11 +13,25 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { AppStoreService } from 'src/services/app-store.service';
+import { ButtonStates } from 'src/shared/shared-types';
+
+const componentTemplate = `
+<p-button
+  [label]="label"
+  class="flex align-items-center justify-content-center m-2"
+  (click)="onClick()"
+  [@buttonAnimation]="state == ButtonStates.Done ? 'done' : 'normal'"
+  [outlined]="outlined"
+  [severity]="severity"
+  [disabled]="state == ButtonStates.Done"
+>
+</p-button>
+`;
 
 @Component({
-  selector: 'app-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css'],
+  selector: 'app-quiz-element-button',
+  template: componentTemplate,
+  styles: [],
   animations: [
     trigger('buttonAnimation', [
       state('done', style({ opacity: 0, transform: 'translateY(500%)' })),
@@ -44,10 +58,11 @@ import { AppStoreService } from 'src/services/app-store.service';
     ]),
   ],
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class QuizElementButtonComponent implements OnInit, OnChanges {
+  ButtonStates = ButtonStates;
   @Input() label!: string;
   @Input() id!: number;
-  @Input() state!: string;
+  @Input() state!: ButtonStates;
 
   constructor(private store: AppStoreService) {}
 
@@ -55,19 +70,19 @@ export class ButtonComponent implements OnInit, OnChanges {
   severity = '';
 
   ngOnInit(): void {
-    this.updateFields();
+    this.updateStyling();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.updateFields();
+    this.updateStyling();
   }
 
-  updateFields(): void {
+  updateStyling(): void {
     // outlined
-    this.outlined = this.state != 'selected';
+    this.outlined = this.state != ButtonStates.Selected;
 
     // severity
-    if (this.state == 'red') {
+    if (this.state == ButtonStates.Red) {
       this.severity = 'danger';
     } else {
       this.severity = '';
