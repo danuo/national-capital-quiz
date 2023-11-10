@@ -23,12 +23,6 @@ export interface MyState {
 const RANGE_MAX = 15;
 const RANGE_MIN = 1;
 
-enum QuizState {
-  SELECTED_ZERO,
-  ONE_SELECTED,
-  TWO_SELECTED,
-}
-
 @Injectable({ providedIn: 'root' })
 export class AppStoreService extends ComponentStore<MyState> {
   readonly buttonsLabels$: Observable<string[]> = this.select(
