@@ -15,7 +15,6 @@ export interface MyState {
   buttonsDone: boolean[];
   correctResultMapping: StringObject;
   nMax: number;
-  selectedIndex: number | null;
   selectedIndices: number[];
   sessionId: number;
 }
@@ -35,10 +34,6 @@ export class AppStoreService extends ComponentStore<MyState> {
     (state) => state.correctResultMapping
   );
   readonly nMax$: Observable<number> = this.select((state) => state.nMax);
-
-  readonly selectedIndex$: Observable<number | null> = this.select(
-    (state) => state.selectedIndex
-  );
 
   readonly selectedIndices$: Observable<number[]> = this.select(
     (state) => state.selectedIndices
@@ -102,7 +97,6 @@ export class AppStoreService extends ComponentStore<MyState> {
       buttonsDone: [],
       correctResultMapping: {},
       nMax: 10,
-      selectedIndex: null,
       selectedIndices: [],
       sessionId: 0,
     });
