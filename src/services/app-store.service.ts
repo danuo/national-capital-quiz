@@ -11,12 +11,10 @@ import {
 import { cloneDeep } from 'lodash';
 
 export interface MyState {
-  buttons: ButtonData[];
   buttonsLabels: string[];
   buttonsDone: boolean[];
   correctResultMapping: StringObject;
   nMax: number;
-  nSolved: number;
   selectedIndex: number | null;
   selectedIndices: number[];
   sessionId: number;
@@ -33,9 +31,6 @@ enum QuizState {
 
 @Injectable({ providedIn: 'root' })
 export class AppStoreService extends ComponentStore<MyState> {
-  readonly buttons$: Observable<ButtonData[]> = this.select(
-    (state) => state.buttons
-  );
   readonly buttonsLabels$: Observable<string[]> = this.select(
     (state) => state.buttonsLabels
   );
@@ -46,7 +41,7 @@ export class AppStoreService extends ComponentStore<MyState> {
     (state) => state.correctResultMapping
   );
   readonly nMax$: Observable<number> = this.select((state) => state.nMax);
-  readonly nSolved$: Observable<number> = this.select((state) => state.nSolved);
+
   readonly selectedIndex$: Observable<number | null> = this.select(
     (state) => state.selectedIndex
   );
@@ -61,6 +56,18 @@ export class AppStoreService extends ComponentStore<MyState> {
 
   readonly nTotal$: Observable<number> = this.correctResultMapping$.pipe(
     map((list: StringObject) => Object.keys(list).length / 2)
+  );
+
+  readonly nSolved$: Observable<number> = this.buttonsDone$.pipe(
+    map((list: boolean[]) => {
+      let counter = 0;
+      list.forEach((item) => {
+        if (item) {
+          counter++;
+        }
+      });
+      return counter / 2;
+    })
   );
 
   readonly isDone$: Observable<boolean> = this.nTotal$.pipe(
@@ -97,19 +104,13 @@ export class AppStoreService extends ComponentStore<MyState> {
 
   constructor(private dataInit: DataInitService) {
     super({
-      buttons: [],
       buttonsLabels: [],
       buttonsDone: [],
       correctResultMapping: {},
       nMax: 10,
-      nSolved: 0,
       selectedIndex: null,
       selectedIndices: [],
       sessionId: 0,
-    });
-
-    this.buttons$.subscribe((buttons) => {
-      // this.refreshNSolved(buttons);
     });
 
     this.nMax$.subscribe(() => {
@@ -135,7 +136,6 @@ export class AppStoreService extends ComponentStore<MyState> {
     });
 
     this.patchState({
-      // buttons,
       buttonsLabels: newQuizData.shuffledButtonLabels,
       buttonsDone,
       correctResultMapping: newQuizData.correctResultMapping,
