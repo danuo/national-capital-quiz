@@ -135,7 +135,7 @@ export class AppStoreService extends ComponentStore<MyState> {
     });
 
     this.patchState({
-      buttons,
+      // buttons,
       buttonsLabels: newQuizData.shuffledButtonLabels,
       buttonsDone,
       correctResultMapping: newQuizData.correctResultMapping,
@@ -162,6 +162,7 @@ export class AppStoreService extends ComponentStore<MyState> {
   }
 
   selectItem(newIndex: number) {
+    console.log(newIndex);
     let state = this.state();
 
     // 0 items selected
@@ -203,53 +204,4 @@ export class AppStoreService extends ComponentStore<MyState> {
       return;
     }
   }
-
-  // selectItemOld(newIndex: number) {
-  //   let state = this.state();
-  //   let buttons = cloneDeep(state.buttons);
-
-  //   let selectedName = '';
-  //   if (state.selectedIndex != null) {
-  //     selectedName = buttons[state.selectedIndex].label;
-  //   }
-  //   let newName = buttons[newIndex].label;
-
-  //   // reset buttons that are not done
-  //   for (let button of buttons) {
-  //     if (button.state != 'done') {
-  //       button.state = '';
-  //     }
-  //   }
-
-  //   // only one selected
-  //   if (state.selectedIndex == null) {
-  //     this.patchState({ selectedIndex: newIndex });
-  //     buttons[newIndex].state = 'selected';
-  //   } else if (state.selectedIndex == newIndex) {
-  //     // same button clicked again
-  //     this.patchState({ selectedIndex: null });
-  //   } else if (state.correctResultMapping[selectedName] == newName) {
-  //     // correct pair selected
-  //     buttons[newIndex].state = 'done';
-  //     buttons[state.selectedIndex].state = 'done';
-  //     this.patchState({ selectedIndex: null });
-  //   } else {
-  //     // incorrect pair selected
-  //     buttons[newIndex].state = 'red';
-  //     buttons[state.selectedIndex].state = 'red';
-  //     this.patchState({ selectedIndex: null });
-  //   }
-  //   this.patchState({ buttons: buttons });
-  // }
-
-  // refreshNSolved(buttons: ButtonData[]) {
-  //   let nSolved = 0;
-  //   for (let button of buttons) {
-  //     if (button.state == 'done') {
-  //       nSolved++;
-  //     }
-  //   }
-  //   nSolved = nSolved / 2;
-  //   this.patchState({ nSolved });
-  // }
 }
