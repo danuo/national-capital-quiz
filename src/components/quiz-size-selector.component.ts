@@ -8,11 +8,14 @@ const componentTemplate = `
     [outlined]="true"
     (click)="decrement()"
   ></p-button>
-  <div class="relative" style="width: 4rem">
+  <div class="relative">
     <div
-      class="absolute h-full w-full flex justify-content-center align-items-center"
+      class="absolute h-full w-full flex align-items-center pl-2"
     >
-      <i class="pi pi-sort-alt" style="font-size: 1.1rem"></i>
+    <app-quiz-progress></app-quiz-progress>
+    </div>
+    <div ngClass="text-xl p-2" [ngStyle]="{ 'visibility': 'hidden' }">
+      Solved 10/10
     </div>
   </div>
   <p-button
@@ -24,7 +27,7 @@ const componentTemplate = `
 `;
 
 @Component({
-  selector: 'app-number-selector',
+  selector: 'app-quiz-size-selector',
   template: componentTemplate,
   styles: [],
 })

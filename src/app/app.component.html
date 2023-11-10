@@ -9,23 +9,18 @@
         Try to pair every country with it's capital city. <br />
       </div>
       <div class="m-3">
-        <app-number-selector></app-number-selector>
+        <app-quiz-size-selector></app-quiz-size-selector>
       </div>
       <div
         class="border-2 border-dashed surface-border"
         [ngStyle]="{ 'min-height': '400px' }"
       >
-        <div class="flex flex-wrap align-items-center m-3 mt-4">
-          <app-refresh-button></app-refresh-button>
-          <app-quiz-progress ngClass="pl-2"></app-quiz-progress>
-        </div>
-
         <div class="relative">
           <ng-container *ngIf="isDone$ | async">
             <div
               class="absolute w-full h-full flex flex-column align-items-center"
             >
-              <div class="mt-4 mb-2 text-2xl font-medium">Congratulations!</div>
+              <div class="mt-8 mb-2 text-2xl font-medium">Congratulations!</div>
               <app-confetti-button></app-confetti-button>
             </div>
           </ng-container>

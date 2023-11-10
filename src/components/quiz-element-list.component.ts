@@ -4,7 +4,8 @@ import { AppStoreService } from 'src/services/app-store.service';
 import { ButtonData } from 'src/shared/shared-types';
 
 const componentTemplate = `
-<div class="flex flex-wrap m-3">
+<div class="flex flex-wrap m-3 gap-2">
+  <app-refresh-button></app-refresh-button>
   <ng-container
     *ngFor="let button of buttonsNew$ | async; index as i; trackBy: trackByItem"
   >
