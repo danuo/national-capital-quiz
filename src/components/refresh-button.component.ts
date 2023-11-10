@@ -4,7 +4,6 @@ import { AppStoreService } from 'src/services/app-store.service';
 const componentTemplate = `
 <p-button
   label="refresh"
-  class="m-2"
   severity="help"
   [outlined]="false"
   (click)="refresh()"

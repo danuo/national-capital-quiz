@@ -18,7 +18,6 @@ import { ButtonStates } from 'src/shared/shared-types';
 const componentTemplate = `
 <p-button
   [label]="label"
-  class="flex align-items-center justify-content-center m-2"
   (click)="onClick()"
   [@buttonAnimation]="state == ButtonStates.Done ? 'done' : 'normal'"
   [outlined]="outlined"
