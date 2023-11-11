@@ -2,21 +2,19 @@ import { Component } from '@angular/core';
 import { AppStoreService } from 'src/services/app-store.service';
 import { WindowService } from 'src/services/window.service';
 
-const componentTemplate = `
-<p-button
-  icon="pi pi-heart"
-  [rounded]="true"
-  severity="help"
-  [outlined]="true"
-  (click)="onClick()"
-  [raised]="true"
-  size="large"
-></p-button>
-`;
-
 @Component({
   selector: 'app-confetti-button',
-  template: componentTemplate,
+  template: `
+    <p-button
+      icon="pi pi-heart"
+      [rounded]="true"
+      severity="help"
+      [outlined]="true"
+      (click)="onClick()"
+      [raised]="true"
+      size="large"
+    ></p-button>
+  `,
   styles: [],
 })
 export class ConfettiButtonComponent {
@@ -26,7 +24,7 @@ export class ConfettiButtonComponent {
     private store: AppStoreService,
     private windowService: WindowService
   ) {
-    this.store.isDone$.subscribe((isDone) => {
+    this.store.quizIsDone$.subscribe((isDone) => {
       if (this.previousIsDone == false && isDone == true) {
         this.windowService.window.scrollTo({ top: 0, behavior: 'smooth' });
       }

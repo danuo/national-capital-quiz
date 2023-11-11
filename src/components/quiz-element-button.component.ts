@@ -15,22 +15,20 @@ import {
 import { AppStoreService } from 'src/services/app-store.service';
 import { ButtonStates } from 'src/shared/shared-types';
 
-const componentTemplate = `
-<p-button
-  [label]="label"
-  class="flex"
-  (click)="onClick()"
-  [@buttonAnimation]="state == ButtonStates.Done ? 'done' : 'normal'"
-  [outlined]="outlined"
-  [severity]="severity"
-  [disabled]="state == ButtonStates.Done"
->
-</p-button>
-`;
-
 @Component({
   selector: 'app-quiz-element-button',
-  template: componentTemplate,
+  template: `
+    <p-button
+      [label]="label"
+      class="flex"
+      (click)="onClick()"
+      [@buttonAnimation]="state == ButtonStates.Done ? 'done' : 'normal'"
+      [outlined]="outlined"
+      [severity]="severity"
+      [disabled]="state == ButtonStates.Done"
+    >
+    </p-button>
+  `,
   styles: [],
   animations: [
     trigger('buttonAnimation', [

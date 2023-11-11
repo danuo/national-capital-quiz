@@ -1,0 +1,13 @@
+<div class="flex flex-wrap m-3 gap-2">
+  <app-refresh-button></app-refresh-button>
+  <ng-container
+    *ngFor="let button of buttonsNew$ | async; index as i; trackBy: trackByItem"
+  >
+    <app-quiz-element-button
+      [label]="button.label"
+      [state]="button.state"
+      [id]="i"
+    >
+    </app-quiz-element-button>
+  </ng-container>
+</div>
