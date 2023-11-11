@@ -118,6 +118,7 @@ export class AppStoreService extends ComponentStore<MyState> {
       buttonDoneStates: buttonsDone,
       correctResultMapping: newQuizData.correctResultMapping,
       sessionId,
+      selectedIndices: [],
     });
   }
 
