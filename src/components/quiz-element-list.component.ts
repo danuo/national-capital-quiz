@@ -3,21 +3,9 @@ import { Component } from '@angular/core';
 import { AppStoreService } from 'src/services/app-store.service';
 import { ButtonData } from 'src/shared/shared-types';
 
-const componentTemplate = `
-<div class="flex flex-wrap m-3 gap-2">
-  <app-refresh-button></app-refresh-button>
-  <ng-container
-    *ngFor="let button of buttonsNew$ | async; index as i; trackBy: trackByItem"
-  >
-    <app-quiz-element-button [label]="button.label" [state]="button.state" [id]="i">
-    </app-quiz-element-button>
-  </ng-container>
-</div>
-`;
-
 @Component({
   selector: 'app-quiz-element-list',
-  template: componentTemplate,
+  templateUrl: './quiz-element-list.component.html',
   styles: [],
 })
 export class QuizElementListComponent {
