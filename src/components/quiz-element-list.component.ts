@@ -22,7 +22,7 @@ const componentTemplate = `
 })
 export class QuizElementListComponent {
   buttonsNew$ = this.store.buttons;
-  isDone$ = this.store.isDone$;
+  isDone$ = this.store.quizIsDone$;
 
   constructor(private store: AppStoreService) {}
 

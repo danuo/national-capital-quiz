@@ -7,7 +7,7 @@ import { AppStoreService } from 'src/services/app-store.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  isDone$ = this.store.isDone$;
+  isDone$ = this.store.quizIsDone$;
 
   constructor(
     private store: AppStoreService,

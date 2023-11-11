@@ -20,6 +20,6 @@ export class RefreshButtonComponent {
   constructor(private store: AppStoreService) {}
 
   refresh() {
-    this.store.refreshQuizData();
+    this.store.restQuiz();
   }
 }

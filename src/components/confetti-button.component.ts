@@ -26,7 +26,7 @@ export class ConfettiButtonComponent {
     private store: AppStoreService,
     private windowService: WindowService
   ) {
-    this.store.isDone$.subscribe((isDone) => {
+    this.store.quizIsDone$.subscribe((isDone) => {
       if (this.previousIsDone == false && isDone == true) {
         this.windowService.window.scrollTo({ top: 0, behavior: 'smooth' });
       }
