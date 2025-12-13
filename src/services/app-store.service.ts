@@ -8,7 +8,7 @@ import {
   StringObject,
 } from 'src/shared/shared-types';
 
-import { cloneDeep, sum } from 'lodash';
+import { cloneDeep, sum } from 'lodash-es';
 
 export interface MyState {
   buttonLabels: string[];

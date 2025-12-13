@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { invert, pick, shuffle, take } from 'lodash';
+import { invert, pick, shuffle, take } from 'lodash-es';
 import { countryData } from 'src/shared/init-data';
 import { StringObject } from 'src/shared/shared-types';
 
